@@ -67,13 +67,13 @@ const Navbar = () => {
                         <div className={`navbar ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'} w-96 h-screen overflow-auto`}>
                             <Routes>
                                 <Route path="/route1" element={
-                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota 1 aqui!</div>
+                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota do search aqui!</div>
                                 } />
                                 <Route path="/route2" element={
-                                    <div className='p-4 items-center py-10 text-primary '>Seu conteúdo para a rota 2 aqui!</div>
+                                    <div className='p-4 items-center py-10 text-primary '>Seu conteúdo para a rota MAPA aqui!</div>
                                 } />
                                 <Route path="/route3" element={
-                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota 3 aqui!</div>
+                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota Formulario aqui!</div>
                                 } />
                             </Routes>
                         </div>
