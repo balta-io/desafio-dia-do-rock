@@ -1,17 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import {GoogleMap, useJsApiLoader, Marker, InfoWindow} from '@react-google-maps/api';
 import moment from "moment";
 import 'moment/locale/pt-br'
+import {DarkModeContext} from "../DarkModeProvider";
 
 const containerStyle = {
     width: '100%',
-    height: '100vh'
+    height: '100%'
 };
 
 function Map({center, zoom, markers = [], panTo = null}) {
     const [selectedElement, setSelectedElement] = React.useState(null);
     const [activeMarker, setActiveMarker] = React.useState(null);
     const [showInfoWindow, setInfoWindowFlag] = React.useState(true);
+    const { darkMode } = useContext(DarkModeContext);
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
