@@ -60,11 +60,10 @@ const Navbar = () => {
                             </svg>
                         </Link>
                     </div>
-
                 </nav>
                 <div className={`overflow-auto transition-all duration-500 ease-in-out ${isExpanded ? 'w-96' : 'w-0'}`}>
                     {isExpanded && (
-                        <div className={`navbar ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'} w-96 h-screen overflow-auto`}>
+                        <div className={`navbar ${darkMode ? 'bg-dark-100 text-light' : 'bg-light text-dark'} w-96 h-screen overflow-auto`}>
                             <Routes>
                                 <Route path="/route1" element={
                                     <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota do search aqui!</div>
@@ -79,7 +78,6 @@ const Navbar = () => {
                         </div>
                     )}
                 </div>
-
             </div>
         </Router>
     );
