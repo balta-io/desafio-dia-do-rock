@@ -71,7 +71,7 @@ const Navbar = () => {
                                 <Route path="/map" element={
                                     <div className='p-4 items-center py-10 text-primary '>Seu conteúdo para a rota MAPA aqui!</div>
                                 } />
-                                <Route path="/add-envent" element={
+                                <Route path="/add-event" element={
                                     <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota Formulario aqui!</div>
                                 } />
                             </Routes>
