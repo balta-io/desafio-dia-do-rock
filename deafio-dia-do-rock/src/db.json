@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "title": "Rock in Rio",
+    "description": "O maior festival de música e entretenimento do mundo, reunindo grandes nomes do rock internacional e nacional.",
+    "address": "Parque Olímpico, Rio de Janeiro",
+    "datetime": "2024-09-27T18:00:00",
+    "position": {
+      "lat": -22.977112,
+      "lng": -43.396305
+    }
+  },
+  {
+    "id": 2,
+    "title": "Lollapalooza Brasil",
+    "description": "Festival de música alternativa, rock, eletrônica e hip-hop, realizado anualmente em São Paulo.",
+    "address": "Autódromo de Interlagos, São Paulo",
+    "datetime": "2024-03-25T12:00:00",
+    "position": {
+      "lat": -23.701764,
+      "lng": -46.697674
+    }
+  },
+  {
+    "id": 3,
+    "title": "Download Festival",
+    "description": "Um dos maiores e mais reconhecidos festivais de rock e metal do mundo, realizado no Reino Unido.",
+    "address": "Donington Park, Leicestershire, England",
+    "datetime": "2024-06-10T11:00:00",
+    "position": {
+      "lat": 52.830101,
+      "lng": -1.375487
+    }
+  },
+  {
+    "id": 4,
+    "title": "Hellfest",
+    "description": "Festival de música extrema, abrangendo gêneros como heavy metal, hard rock, punk e hardcore, na França.",
+    "address": "Clisson, France",
+    "datetime": "2024-06-22T10:00:00",
+    "position": {
+      "lat": 47.087219,
+      "lng": -1.280496
+    }
+  },
+  {
+    "id": 5,
+    "title": "Wacken Open Air",
+    "description": "O maior festival de heavy metal do mundo, realizado anualmente na Alemanha.",
+    "address": "Wacken, Germany",
+    "datetime": "2024-08-01T15:00:00",
+    "position": {
+      "lat": 53.959965,
+      "lng": 9.378994
+    }
+  }
+]
