@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { DarkModeContext } from '../DarkModeProvider/index';
+
 
 const Navbar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const { darkMode } = useContext(DarkModeContext);
 
     const toggleExpansion = () => {
         setIsExpanded(!isExpanded);
@@ -14,12 +17,10 @@ const Navbar = () => {
         }
     };
 
-
-
     return (
         <Router>
             <div className="flex">
-                <nav className="flex flex-col bg-white w-16 h-screen tex-sm px-4">
+                <nav className={`navbar ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'} flex flex-col  w-16 h-screen tex-sm px-4`}>
                     <div>
                         <a href="/" className="flex items-center py-9 text-primary" >
                             <img src="https://i.ytimg.com/vi/fjMEN-csN10/maxresdefault.jpg" alt="Logo" className="w-8 h-8 rounded-full" />
@@ -39,7 +40,7 @@ const Navbar = () => {
                         <button onClick={toggleExpansion} className="absolute bottom-0 mb-2 self-end mr-2 mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-500">
                                 {isExpanded ? (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    <path className='text-red-500' strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 ) : (
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                                 )}
@@ -54,16 +55,16 @@ const Navbar = () => {
                 </nav>
                 <div className={`overflow-auto transition-all duration-500 ease-in-out ${isExpanded ? 'w-96' : 'w-0'}`}>
                     {isExpanded && (
-                        <div className='w-96 h-screen bg-white overflow-auto'>
+                        <div className={`navbar ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'} w-96 h-screen overflow-auto`}>
                             <Routes>
                                 <Route path="/route1" element={
-                                    <div className='p-4 bg-gray-100 items-center py-10 text-primary '>Seu conteúdo para a rota 1 aqui!</div>
+                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota 1 aqui!</div>
                                 } />
                                 <Route path="/route2" element={
-                                    <div className='p-4 bg-gray-100 items-center py-10 text-primary '>Seu conteúdo para a rota 2 aqui!</div>
+                                    <div className='p-4 items-center py-10 text-primary '>Seu conteúdo para a rota 2 aqui!</div>
                                 } />
                                 <Route path="/route3" element={
-                                    <div className='p-4 bg-gray-100 items-center py-10 text-primary '>Seu conteúdo para a rota 3 aqui!</div>
+                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota 3 aqui!</div>
                                 } />
                             </Routes>
                         </div>
