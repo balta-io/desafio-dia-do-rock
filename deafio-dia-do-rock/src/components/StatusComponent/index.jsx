@@ -1,9 +1,12 @@
 import {FaCheckCircle} from "react-icons/fa";
 import {MdOutlineError} from "react-icons/md";
+import {useContext} from "react";
+import {DarkModeContext} from "../DarkModeProvider";
 
 export default function StatusComponent({isSuccess = 1, title, message, onClick}) {
+    const { darkMode } = useContext(DarkModeContext);
     return (
-        <div className="flex flex-col gap-4 justify-center items-center text-center text-dark">
+        <div className={`${darkMode ? 'text-light' : 'text-dark'}  flex flex-col gap-4 justify-center items-center text-center`}>
             {isSuccess
                 ? <FaCheckCircle className="text-success text-5xl"/>
                 : <MdOutlineError className="text-danger text-5xl"/>
