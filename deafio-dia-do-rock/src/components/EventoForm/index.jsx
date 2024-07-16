@@ -35,7 +35,7 @@ export const EventoForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch('https://api.example.com/eventos', {
+          const response = await fetch('localhost:5000/eventos', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
