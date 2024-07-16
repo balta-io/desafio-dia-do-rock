@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { DarkModeContext } from '../DarkModeProvider/index';
+import SearchBar from '../SearchBar/Index';
 
 
 const Navbar = () => {
@@ -66,7 +67,8 @@ const Navbar = () => {
                         <div className={`navbar ${darkMode ? 'bg-dark-100 text-light' : 'bg-light text-dark'} w-96 h-screen overflow-auto`}>
                             <Routes>
                                 <Route path="/search" element={
-                                    <div className='p-4  items-center py-10 text-primary '>Seu conteúdo para a rota do search aqui!</div>
+                                    <div className='p-4  items-center py-10 text-primary '>
+                                        <SearchBar /></div>
                                 } />
                                 <Route path="/map" element={
                                     <div className='p-4 items-center py-10 text-primary '>Seu conteúdo para a rota MAPA aqui!</div>
