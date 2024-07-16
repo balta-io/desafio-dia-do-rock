@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { IoMdSearch } from "react-icons/io";
 import CardEvent from '../CardEvent';
 import dbjson from '../../db.json';
 import { DarkModeContext } from '../DarkModeProvider/index';
 
-function SearchBar() {
-
+const SearchTeste = () => {
     const [events, setEvents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const { darkMode } = useContext(DarkModeContext);
+    const { darkMode, setDarkMode } = useContext(DarkModeContext);
 
     useEffect(() => {
         setEvents(dbjson);
@@ -26,23 +24,16 @@ function SearchBar() {
         }
     };
 
-    
-
     return (
-        <>
-            <h2 className="input-title">Buscar evento</h2>
-
-            <div className={`${darkMode ? 'bg-dark-100 flex items-center' : 'items-center flex w-full'}`}>
-                <IoMdSearch className={darkMode ? 'text-light w-5 h-5' : 'text-dark w-5 h-5'} />
+        <div>
+            <div className='flex justify-center items-center'>
                 <input
-                    className={`${darkMode ? 'bg-dark-100 ml-1 mr-1 w-full h-8 outline-none' : 'bg-light ml-1 mr-1 w-full h-8 outline-none'}`}
-                    onChange={handleSearch}
-                    type="text"
+                    type='text'
+                    className='border border-primary rounded p-2 mr-3 '
                     value={searchTerm}
-                    placeholder="Nome da banda..."
+                    onChange={handleSearch}
                 />
             </div>
-
             {searchTerm && (
                 events.length > 0 ? (
                     events.map(event => (
@@ -60,8 +51,8 @@ function SearchBar() {
                     <p>Não foi possível encontrar a banda: {searchTerm}</p>
                 )
             )}
-        </>
-    )
-}
+        </div>
+    );
+};
 
-export default SearchBar
+export default SearchTeste;

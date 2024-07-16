@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { DarkModeContext } from '../DarkModeProvider/index';
 import SearchBar from '../SearchBar/Index';
+import SearchTeste from '../SearchTeste';
 
 
 const Navbar = () => {
