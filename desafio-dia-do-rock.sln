@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{362ABB10-AED
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.UI", "src\DesafioDiaDoRock.UI\DesafioDiaDoRock.UI.csproj", "{159C02A4-A715-4636-9B27-AD776C87A953}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.ApplicationCore", "ApplicationCore\DesafioDiaDoRock.ApplicationCore.csproj", "{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.ApplicationCore", "src\DesafioDiaDoRock.ApplicationCore\DesafioDiaDoRock.ApplicationCore.csproj", "{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.Infraestructure", "Infraestructure\DesafioDiaDoRock.Infraestructure.csproj", "{D67DE016-46D7-426D-B2BB-70F0300CBA0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.Infraestructure", "src\DesafioDiaDoRock.Infraestructure\DesafioDiaDoRock.Infraestructure.csproj", "{D67DE016-46D7-426D-B2BB-70F0300CBA0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.PublicApi", "DesafioDiaDoRock.PublicApi\DesafioDiaDoRock.PublicApi.csproj", "{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.PublicApi", "src\DesafioDiaDoRock.PublicApi\DesafioDiaDoRock.PublicApi.csproj", "{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
