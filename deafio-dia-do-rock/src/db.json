@@ -1,0 +1,88 @@
+
+[
+  {
+    "id": 1,
+    "title": "Rock in Rio",
+    "image": "https://gizmodo.uol.com.br/wp-content/blogs.dir/8/files/2022/09/rock-in-rio-1024x683-1.webp",
+    "bands": [
+      "Iron Maiden",
+      "Ac/Dc",
+      "Red Hot Chili Peppers"
+    ],
+    "description": "O maior festival de música e entretenimento do mundo, reunindo grandes nomes do rock internacional e nacional.",
+    "address": "Parque Olímpico, Rio de Janeiro",
+    "datetime": "2024-09-27T18:00:00",
+    "position": {
+      "lat": -22.977112,
+      "lng": -43.396305
+    }
+  },
+  {
+    "id": 2,
+    "title": "Lollapalooza Brasil",
+    "image": "https://istoe.com.br/wp-content/uploads/2024/02/lollapalooza.jpg",
+    "bands": [
+      "The Strokes",
+      "Foo Fighters",
+      "Kendrick Lamar"
+    ],
+    "description": "Festival de música alternativa, rock, eletrônica e hip-hop, realizado anualmente em São Paulo.",
+    "address": "Autódromo de Interlagos, São Paulo",
+    "datetime": "2024-03-25T12:00:00",
+    "position": {
+      "lat": -23.701764,
+      "lng": -46.697674
+    }
+  },
+  {
+    "id": 3,
+    "title": "Download Festival",
+    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhzuSppu9iKVjva39ZVRk2swQ22tFSzMm0e85PTpZUVbXWD-qdZspa24xFgtaIC-DBp7xz3JrlU1h0M8jns3HGI4-GrHjXPts1rGrGuNdwhuBG0zB4__1D9snIPfRi0DLOZqPgkD19VT78/s1600/download-festival-uk-04.jpg",
+    "bands": [
+      "Kiss",
+      "Iron Maiden",
+      "System of a Down"
+    ],
+    "description": "Um dos maiores e mais reconhecidos festivais de rock e metal do mundo, realizado no Reino Unido.",
+    "address": "Donington Park, Leicestershire, England",
+    "datetime": "2024-06-10T11:00:00",
+    "position": {
+      "lat": 52.830101,
+      "lng": -1.375487
+    }
+  },
+  {
+    "id": 4,
+    "title": "Hellfest",
+    "description": "Festival de música extrema, abrangendo gêneros como heavy metal, hard rock, punk e hardcore, na França.",
+    "image": "https://cdn.sortiraparis.com/images/80/87172/467251-hellfest-2019-a-clisson-les-photos.jpg",
+    "bands": [
+      "Metallica",
+      "Slipknot",
+      "Judas Priest"
+    ],
+    "address": "Clisson, France",
+    "datetime": "2024-06-22T10:00:00",
+    "position": {
+      "lat": 47.087219,
+      "lng": -1.280496
+    }
+  },
+  {
+    "id": 5,
+    "title": "Wacken Open Air",
+    "image": "https://ilhadometal.com.br/manowar/wp-content/uploads/2022/08/csm_woa23_social-media-profile-picture_38c48c9d4a-700x700.jpg",
+    "bands": [
+      "Manowar",
+      "Nightwish",
+      "Slayer"
+    ],
+    "description": "O maior festival de heavy metal do mundo, realizado anualmente na Alemanha.",
+    "address": "Wacken, Germany",
+    "datetime": "2024-08-01T15:00:00",
+    "position": {
+      "lat": 53.959965,
+      "lng": 9.378994
+    }
+  }
+]
