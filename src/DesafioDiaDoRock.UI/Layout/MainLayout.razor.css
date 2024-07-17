@@ -1,7 +1,7 @@
 .page {
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 main {
@@ -12,6 +12,9 @@ main {
 .sidebar {
     width: 64px;
     background-color: #ECEDE6;
+    height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 .top-row {
@@ -49,16 +52,6 @@ main {
 }
 
 @media (min-width: 641px) {
-    .page {
-        flex-direction: row;
-    }
-
-    .sidebar {
-        width: 64px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
 
     .top-row {
         position: sticky;

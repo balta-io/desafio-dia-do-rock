@@ -8,24 +8,24 @@
 <div class="actionbar">
     @if (created)
     {
-        if (result)
-        {
-            <div class="div-result">
+        <div class="div-result">
+            @if (result)
+            {
                 <div><img src="/Icon-Checkmark-Circle.svg" /></div>
                 <div><h3>Obrigado pelo envio!</h3></div>
                 <div><p>Seu evento será avaliado pela nossa equipe e você receberá um E-mail em breve com o resultado da nossa aprovação</p></div>
-                <div><button type="button">Fechar</button></div>
-            </div>
-        }
-        else
-        {
-            <div class="div-result">
+                <button type="button">Fechar</button>
+
+            }
+            else
+            {
+
                 <div><img src="/Icon-Error-Circle.svg" /></div>
                 <div><h3>Ops, algo saiu errado</h3></div>
                 <div><p>Ocorreu uma falha ao tentar submeter seu evento, por favor verifique sua conexão com a internet e tente novamente.</p></div>
-                <div><button type="button">Fechar</button></div>
-            </div>
-        }
+                <button type="button">Fechar</button>
+            }
+        </div>
     }
     else
     {
