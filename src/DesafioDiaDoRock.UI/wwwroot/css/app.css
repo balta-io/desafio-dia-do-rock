@@ -193,3 +193,14 @@ code {
     width: 27.19px;
     height: 28px;
 }
+
+@media (max-width: 459px){
+    .actionbar {
+        width: calc(100% - 64px);
+    }
+
+    .div-input {
+        width: 90%;
+        margin: 20px auto 0px auto;
+    }
+}
