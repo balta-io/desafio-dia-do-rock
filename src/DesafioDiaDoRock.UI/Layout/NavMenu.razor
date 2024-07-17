@@ -1,0 +1,34 @@
+﻿<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+            <div class="div-profile" style="">
+                <img src="/1711899863214.jpg" class="img-profile" />
+                <img src="/Presence Badge.svg" class="icon-profile" />
+            </div>
+        <div class="nav-item ">
+            <NavLink class="nav-link" href="/search" Match="NavLinkMatch.All">
+                <img src="/Icon-Search.svg" class="icon-navitem" />
+            </NavLink>
+        </div>
+        <div class="nav-item ">
+            <NavLink class="nav-link" href="/map">
+                <img src="/Icon-Map.svg" class="icon-navitem" />
+            </NavLink>
+        </div>
+        <div class="nav-item ">
+            <NavLink class="nav-link" href="/add">
+                <img src="/Icon-Plus.svg" class="icon-navitem" />
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

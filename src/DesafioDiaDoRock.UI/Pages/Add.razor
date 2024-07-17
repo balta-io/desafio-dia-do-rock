@@ -1,0 +1,145 @@
+﻿@page "/add"
+@inject IEventService eventService
+@inject IJSRuntime JSRuntime
+@inject IPlacesService placeService
+
+<PageTitle>Adicionar Evento</PageTitle>
+
+<div class="actionbar">
+    @if (created)
+    {
+        if (result)
+        {
+            <div class="div-result">
+                <div><img src="/Icon-Checkmark-Circle.svg" /></div>
+                <div><h3>Obrigado pelo envio!</h3></div>
+                <div><p>Seu evento será avaliado pela nossa equipe e você receberá um E-mail em breve com o resultado da nossa aprovação</p></div>
+                <div><button type="button">Fechar</button></div>
+            </div>
+        }
+        else
+        {
+            <div class="div-result">
+                <div><img src="/Icon-Error-Circle.svg" /></div>
+                <div><h3>Ops, algo saiu errado</h3></div>
+                <div><p>Ocorreu uma falha ao tentar submeter seu evento, por favor verifique sua conexão com a internet e tente novamente.</p></div>
+                <div><button type="button">Fechar</button></div>
+            </div>
+        }
+    }
+    else
+    {
+        <EditForm Model="eventDTO" OnSubmit="Create">
+            <div class="div-add">
+                <div class="div-input">
+                    <label for="band">Banda</label>
+                    <div>
+                        <input type="text" id="band" @bind="eventDTO.Band" />
+                        <img src="/Icon-Search-Black.svg" class="img-input" />
+                    </div>
+                </div>
+
+                <div class="div-input">
+                    <label for="date">Data</label>
+                    <div>
+                        <input type="text" id="date" @onchange="(e) => UpdateDate(e)" />
+                        <img src="/Icon-Date.svg" class="img-input-date" />
+                    </div>
+                </div>
+
+                <div class="div-input">
+                    <MudItem id="div-location">
+                        <label for="location">Local</label>
+                        <MudAutocomplete T="string" id="location" @bind-Value="eventDTO.Address" SearchFunc="@UpdateLocation"
+                                         ResetValueOnEmptyText="true"
+                                         CoerceText="false" CoerceValue="false" Class="div-input-input" />
+                        <img src="/Icon-Map-Black.svg" class="img-input-location" />
+                    </MudItem>
+                </div>
+
+                @if (processing)
+                {
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" style="width: 70%"></div>
+                    </div>
+                }
+                else
+                {
+                    <button type="submit" class="button">
+                        Salvar Evento
+                    </button>
+                    <p class="text-help">Preciso de ajuda</p>
+                }
+            </div>
+
+        </EditForm>
+    }
+</div>
+
+
+@code {
+    EventCreateRequest eventDTO = new();
+
+    bool processing
+    , created
+    , result;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var jsInterop = new JsInterop(JSRuntime);
+            await jsInterop.InitFlatpickr();
+        }
+    }
+
+    void UpdateDate(ChangeEventArgs changeEventArgs)
+        => eventDTO.Date = changeEventArgs.Value.ToDateTime();
+
+    async Task<IEnumerable<string>> UpdateLocation(string search, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(search)) return [];
+
+        var placeResult = await placeService.GetPlaces(search);
+
+
+        // Place place = placeResult.places[0];
+        // address = place.formattedAddress;
+        // nameLocation = place.displayName.text;
+        // latitude = place.location.latitude;
+        // longitude = place.location.longitude;
+
+        return placeResult.places.Select(x => x.displayName.text + " " + x.formattedAddress);
+    }
+
+    async Task Create()
+    {
+        processing = true;
+
+        var placeResult = await placeService.GetPlaces(eventDTO.Address);
+
+        eventDTO.NameLocation = placeResult.places[0].displayName.text;
+        eventDTO.Address = placeResult.places[0].formattedAddress;
+        eventDTO.Latitude = placeResult.places[0].location.latitude;
+        eventDTO.Longitude = placeResult.places[0].location.longitude;
+
+
+        var response = await eventService.Create(
+            new(
+                    0,
+                    eventDTO.Band,
+                    eventDTO.Date,
+                    eventDTO.NameLocation,
+                    eventDTO.Address,
+                    eventDTO.Latitude,
+                    eventDTO.Longitude,
+                    "/ironmaiden.jpg"
+                ));
+
+        created = true;
+        result = response.IsSuccess;
+        processing = false;
+
+    }
+}
