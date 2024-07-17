@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{362ABB10-AED1-43D2-8D81-873906B8FDD3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.UI", "src\DesafioDiaDoRock.UI\DesafioDiaDoRock.UI.csproj", "{159C02A4-A715-4636-9B27-AD776C87A953}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.ApplicationCore", "ApplicationCore\DesafioDiaDoRock.ApplicationCore.csproj", "{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.Infraestructure", "Infraestructure\DesafioDiaDoRock.Infraestructure.csproj", "{D67DE016-46D7-426D-B2BB-70F0300CBA0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.PublicApi", "DesafioDiaDoRock.PublicApi\DesafioDiaDoRock.PublicApi.csproj", "{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{159C02A4-A715-4636-9B27-AD776C87A953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{159C02A4-A715-4636-9B27-AD776C87A953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{159C02A4-A715-4636-9B27-AD776C87A953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{159C02A4-A715-4636-9B27-AD776C87A953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D67DE016-46D7-426D-B2BB-70F0300CBA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67DE016-46D7-426D-B2BB-70F0300CBA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67DE016-46D7-426D-B2BB-70F0300CBA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67DE016-46D7-426D-B2BB-70F0300CBA0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9CCE00-2616-46B0-AC7D-3AD128505E2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{159C02A4-A715-4636-9B27-AD776C87A953} = {362ABB10-AED1-43D2-8D81-873906B8FDD3}
+		{6AB694E3-BE1A-45C3-A80B-3A88893FD0A6} = {362ABB10-AED1-43D2-8D81-873906B8FDD3}
+		{D67DE016-46D7-426D-B2BB-70F0300CBA0D} = {362ABB10-AED1-43D2-8D81-873906B8FDD3}
+		{9D9CCE00-2616-46B0-AC7D-3AD128505E2D} = {362ABB10-AED1-43D2-8D81-873906B8FDD3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35EB3AD0-4902-4352-B67F-4B09EE505122}
+	EndGlobalSection
+EndGlobal

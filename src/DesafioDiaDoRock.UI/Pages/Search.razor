@@ -1,0 +1,57 @@
+﻿@page "/search"
+@inject IEventService eventService
+
+<PageTitle>Pesquisa</PageTitle>
+
+<div class="actionbar">
+    <div class="div-input">
+        <label for="search">Buscar um evento</label>
+        <div>
+            <input type="text" id="search" @onchange="(e) => SearchEvent(e)" autocomplete="off"/>
+            <img src="/Icon-Search-Black.svg" class="img-input" />
+        </div>
+    </div>
+
+    @foreach (var e in events)
+    {
+        <div class="div-search-resonse">
+            <img src="@e.UrlImage" />
+
+            <div class="resonse-address">
+                <h5>@e.NameLocation</h5>
+                <p>@e.Address</p>
+            </div>
+
+            <div class="resonse-hour">
+                @FormatDateResponse(e.Date)
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    List<Event> events = [];
+
+    async Task SearchEvent(ChangeEventArgs changeEventArgs)
+    {
+        events = await eventService.Get(changeEventArgs.Value?.ToString() ?? string.Empty);
+    }
+
+    string FormatDateResponse(DateTime dateTime)
+    {
+        if(dateTime.Date == DateTime.UtcNow.Date)
+        {
+            return dateTime.ToString("HH:mm");
+        }
+        else if(dateTime.Year == DateTime.UtcNow.Year)
+        {
+            return dateTime.ToString("dd/MMM");
+        }
+        else
+        {
+            return dateTime.ToShortDateString();
+        }
+    }
+}
+
