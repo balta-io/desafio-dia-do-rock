@@ -32,5 +32,9 @@ namespace DesafioDiaDoRock.Infraestructure.Repository
 
             return events;
         }
+
+
+        public async Task<List<Event>> Get(CancellationToken cancellationToken)
+            => await context.Event.ToListAsync(cancellationToken);        
     }
 }

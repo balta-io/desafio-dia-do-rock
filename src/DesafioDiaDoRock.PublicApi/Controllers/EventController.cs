@@ -8,10 +8,16 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
     [Route("/[controller]")]
     public class EventController(IEventService eventService) : Controller
     {
-        [HttpGet]
+        [HttpGet("/[controller]/{search}")]
         public async Task<JsonResult> Get(string search, CancellationToken cancellationToken = default)
         {
             return new JsonResult(await eventService.Get(search,cancellationToken));
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> Get(CancellationToken cancellationToken = default)
+        {
+            return new JsonResult(await eventService.Get(cancellationToken));
         }
 
         [HttpPost]

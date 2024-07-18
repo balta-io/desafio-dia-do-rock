@@ -20,6 +20,7 @@
         <script>
             // Initialize and add the map
             let map;
+            let markers = [];
 
             async function initMap() {
                 const position = { lat: -8.407711439884904, lng: -54.368339235802274 };
@@ -27,23 +28,65 @@
                 const { Map } = await google.maps.importLibrary("maps");
                 const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-                // The map, centered at Uluru
                 map = new Map(document.getElementById("map"), {
                     zoom: 4,
                     center: position,
                     mapId: "DEMO_MAP_ID",
                 });
+            }
 
-                // The marker, positioned at Uluru
-                // const marker = new AdvancedMarkerElement({
-                //     map: map,
-                //     position: position,
-                //     title: "Uluru",
-                // });
+            async function creatMarker(position, urlImage, nameLocation, address, date, band) {
+
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+                const contentString =
+                    '<div class="div-search-resonse">' +
+                    '<img src="' + urlImage + '" />' +
+                    '<div class="resonse-address">' +
+                    '<h4>' + band + '</h4>' +
+                    "<h5>" + nameLocation + "</h5>" +
+                    "<p>" + address + "</p>" +
+                    "</div>" +
+                    '<div class="resonse-hour">' +
+                    date +
+                    "</div>" +
+                    "</div>";
+
+
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    ariaLabel: band,
+                });
+
+                const marker = new google.maps.Marker({
+                    position: position,
+                    map,
+                    title: band,
+                });
+
+                markers.push(marker);
+
+                marker.addListener("click", () => {
+                    infowindow.open({
+                        anchor: marker,
+                        map,
+                    });
+                });
+
+            }
+
+            function removeMarkers() {
+                for (let marker of markers) {
+                    marker.setMap(null);
+                }
+                markers = [];
             }
 
             initMap();
         </script>
+
     </main>
 </div>
 

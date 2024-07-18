@@ -1,5 +1,6 @@
 ﻿@page "/search"
 @inject IEventService eventService
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Pesquisa</PageTitle>
 
@@ -23,7 +24,7 @@
             </div>
 
             <div class="resonse-hour">
-                @FormatDateResponse(e.Date)
+                @e.FormatDateResponse();
             </div>
         </div>
     }
@@ -35,23 +36,17 @@
 
     async Task SearchEvent(ChangeEventArgs changeEventArgs)
     {
-        events = await eventService.Get(changeEventArgs.Value?.ToString() ?? string.Empty);
-    }
+        events = await eventService.Get(changeEventArgs.Value?.ToString() ?? string.Empty) ?? [];
 
-    string FormatDateResponse(DateTime dateTime)
-    {
-        if(dateTime.Date == DateTime.UtcNow.Date)
+        var jsInterOp = new JsInterop(JSRuntime);
+
+        await jsInterOp.RemoveMarkers();
+
+        foreach (var @event in events)
         {
-            return dateTime.ToString("HH:mm");
-        }
-        else if(dateTime.Year == DateTime.UtcNow.Year)
-        {
-            return dateTime.ToString("dd/MMM");
-        }
-        else
-        {
-            return dateTime.ToShortDateString();
+            await jsInterOp.CreatMarker(new(@event.Latitude, @event.Longitude), @event);
         }
     }
+    
 }
 

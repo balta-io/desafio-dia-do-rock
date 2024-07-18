@@ -1,21 +1,4 @@
-﻿.div-search-resonse {
-    height: 82px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-    .div-search-resonse img {
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        margin: 5px 12px 5px 20px;
-    }
-
-    .div-search-resonse div p {
-        margin: 0px;
-    }
+﻿
 
 .resonse-address h5 {
     font-size: 16px;

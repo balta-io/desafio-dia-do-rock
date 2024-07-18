@@ -11,7 +11,12 @@ namespace DesafioDiaDoRock.UI.Services
 
         public async Task<List<Event>?> Get(string search, CancellationToken cancellationToken = default)
         {
-            return await _client.GetFromJsonAsync<List<Event>>($"/event?search={search}", cancellationToken);
+            return await _client.GetFromJsonAsync<List<Event>>($"/event/{search}", cancellationToken);
+        }
+
+        public async Task<List<Event>?> Get(CancellationToken cancellationToken = default)
+        {
+            return await _client.GetFromJsonAsync<List<Event>>($"/event", cancellationToken);
         }
 
         public async Task<Response<Event?>> Create(Event @event, CancellationToken cancellationToken = default)
