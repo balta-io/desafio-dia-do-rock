@@ -60,13 +60,22 @@
     line-height: 3rem;
 }
 
-.nav-item ::deep a.active {
+.theme-container.light-mode .nav-item.active {
     background-color: #E5E6E0;
-    color: white;
 }
 
-.nav-item:has(a.active) {
-    background-color: #E5E6E0;
+.theme-container.dark-mode .nav-item.active {
+    background-color: #1a1a1a;
+}
+
+.nav-link.active {
+    background-color: transparent;
+}
+
+.changer {
+    position: absolute;
+    bottom: 0;
+    left: 7px;
 }
 
 .div-profile {

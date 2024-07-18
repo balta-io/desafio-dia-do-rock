@@ -14,6 +14,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IPlacesService, PlacesService>();
+builder.Services.AddScoped<IThemeService, ThemeService>();
 
 builder.Services.AddMudServices();
 
