@@ -1,7 +1,19 @@
 ﻿@page "/map"
+@inject IEventService eventService
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Mapa</PageTitle>
 
 @code {
 
+    protected override async Task OnInitializedAsync()
+    {
+        List<Event> events = await eventService.Get() ?? [];
+        var jsInterOp = new JsInterop(JSRuntime);
+
+        foreach(var @event in events)
+        {
+            await jsInterOp.CreatMarker(new(@event.Latitude,@event.Longitude), @event);
+        }
+    }
 }

@@ -9,6 +9,9 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
     {
         public async Task<List<Event>?> Get(string search, CancellationToken cancellationToken = default) 
             =>  await eventRepository.Get(search, cancellationToken);
+        public async Task<List<Event>?> Get(CancellationToken cancellationToken = default)
+            => await eventRepository.Get(cancellationToken);
+
         public async Task<Response<Event?>> Create(Event @event, CancellationToken cancellationToken = default)
             => new (await eventRepository.Create(@event, cancellationToken));
     }

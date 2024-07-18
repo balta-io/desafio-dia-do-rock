@@ -24,4 +24,19 @@ public class Event
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
     public string UrlImage { get; set; }
+    public string FormatDateResponse()
+    {
+        if (Date == DateTime.UtcNow.Date)
+        {
+            return Date.ToString("HH:mm");
+        }
+        else if (Date.Year == DateTime.UtcNow.Year)
+        {
+            return Date.ToString("dd/MMM");
+        }
+        else
+        {
+            return Date.ToShortDateString();
+        }
+    }
 }
