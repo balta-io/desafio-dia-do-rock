@@ -1,33 +1,43 @@
 ﻿@page "/search"
 @inject IEventService eventService
 @inject IJSRuntime JSRuntime
+@inject IThemeService ThemeService
 
 <PageTitle>Pesquisa</PageTitle>
 
-<div class="actionbar">
-    <div class="div-input">
-        <label for="search">Buscar um evento</label>
-        <div>
-            <input type="text" id="search" @onchange="(e) => SearchEvent(e)" autocomplete="off"/>
-            <img src="/Icon-Search-Black.svg" class="img-input" />
+<div class="theme-container @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
+    <div class="actionbar">
+        <div class="div-input">
+            <label for="search">Buscar um evento</label>
+            <div>
+                <input type="text" id="search" @onchange="(e) => SearchEvent(e)" autocomplete="off"/>
+                @if (ThemeService.IsDarkMode == true)
+                {
+                    <img src="/Icon-Search-White.svg" class="img-input" />
+                }
+                else
+                {
+                    <img src="/Icon-Search-Black.svg" class="img-input" />
+                }
+            </div>
         </div>
+
+        @foreach (var e in events)
+        {
+            <div class="div-search-resonse">
+                <img src="@e.UrlImage" />
+
+                <div class="resonse-address">
+                    <h5>@e.NameLocation</h5>
+                    <p>@e.Address</p>
+                </div>
+
+                <div class="resonse-hour">
+                    @e.FormatDateResponse();
+                </div>
+            </div>
+        }
     </div>
-
-    @foreach (var e in events)
-    {
-        <div class="div-search-resonse">
-            <img src="@e.UrlImage" />
-
-            <div class="resonse-address">
-                <h5>@e.NameLocation</h5>
-                <p>@e.Address</p>
-            </div>
-
-            <div class="resonse-hour">
-                @e.FormatDateResponse();
-            </div>
-        </div>
-    }
 </div>
 
 @code {

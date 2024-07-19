@@ -1,25 +1,46 @@
-﻿<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+﻿@inject NavigationManager Navigation
+@inject IThemeService ThemeService
+
+<div class="theme-container @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
+    <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+        <nav class="flex-column">
             <div class="div-profile" style="">
                 <img src="/1711899863214.jpg" class="img-profile" />
                 <img src="/Presence Badge.svg" class="icon-profile" />
             </div>
-        <div class="nav-item ">
-            <NavLink class="nav-link" href="/search" Match="NavLinkMatch.All">
-                <img src="/Icon-Search.svg" class="icon-navitem" />
-            </NavLink>
-        </div>
-        <div class="nav-item ">
-            <NavLink class="nav-link" href="/map">
-                <img src="/Icon-Map.svg" class="icon-navitem" />
-            </NavLink>
-        </div>
-        <div class="nav-item ">
-            <NavLink class="nav-link" href="/add">
-                <img src="/Icon-Plus.svg" class="icon-navitem" />
-            </NavLink>
-        </div>
-    </nav>
+            <div class="nav-item @(IsNavLinkActive("/search") ? "active" : null)">
+                <NavLink class="nav-link" href="/search" Match="NavLinkMatch.All">
+                    <img src="/Icon-Search.svg" class="icon-navitem" />
+                </NavLink>
+            </div>
+            <div class="nav-item @(IsNavLinkActive("/map") ? "active" : null)">
+                <NavLink class="nav-link" href="/map">
+                    <img src="/Icon-Map.svg" class="icon-navitem" />
+                </NavLink>
+            </div>
+            <div class="nav-item @(IsNavLinkActive("/add") ? "active" : null)">
+                <NavLink class="nav-link" href="/add">
+                    <img src="/Icon-Plus.svg" class="icon-navitem" />
+                </NavLink>
+            </div>
+
+            <div class="nav-item changer">
+
+                <MudThemeProvider IsDarkMode="@ThemeService.IsDarkMode" Theme="myCostomTheme" />
+
+                <button @onclick="ThemeService.ToggleTheme" class="theme-toggle-btn">
+                    @if (ThemeService.IsDarkMode)
+                    {
+                        <img src="/pngtree-vector-sun-icon-png-image_883996-removebg-preview.png" alt="Light Mode" width="40" />
+                    }
+                    else
+                    {
+                        <img src="/icon-moon-removebg-preview.png" alt="Dark Mode" width="40" />
+                    }
+                </button>
+            </div>
+        </nav>
+    </div>
 </div>
 
 @code {
@@ -31,4 +52,46 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+        ThemeService.OnThemeChanged += OnThemeChanged;
+    }
+
+
+    private MudTheme myCostomTheme = new MudTheme()
+        {
+            PaletteLight = new PaletteLight()
+            {
+                Primary = Colors.DeepPurple.Darken2,
+                Secondary = Colors.Green.Accent4,
+                AppbarBackground = Colors.BlueGray.Darken3,
+            },
+
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Darken4,
+                Secondary = Colors.Green.Accent4,
+                AppbarBackground = Colors.Gray.Darken3,
+            },
+        };
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    private bool IsNavLinkActive(string href)
+    {
+        return Navigation.Uri.Contains(href, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void OnThemeChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
+
+
 }
