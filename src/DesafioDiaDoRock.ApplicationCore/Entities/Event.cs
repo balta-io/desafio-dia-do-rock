@@ -14,6 +14,7 @@ public class Event
         Latitude = latitude;
         Longitude = longitude;
         UrlImage = urlImage;
+        roles = [];
     }
 
     public int Id { get; set; }
@@ -39,4 +40,6 @@ public class Event
             return Date.ToShortDateString();
         }
     }
+
+    public string[] roles { get; set; }
 }

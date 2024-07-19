@@ -1,29 +1,67 @@
 ﻿using DesafioDiaDoRock.ApplicationCore.Entities;
 using DesafioDiaDoRock.ApplicationCore.Interfaces.Services;
+using DesafioDiaDoRock.ApplicationCore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DesafioDiaDoRock.PublicApi.Controllers
 {
     [ApiController]
-    [Route("/[controller]")]
-    public class EventController(IEventService eventService) : Controller
+    [Route("[controller]")]
+    public class EventController : ControllerBase
     {
-        [HttpGet("/[controller]/{search}")]
-        public async Task<JsonResult> Get(string search, CancellationToken cancellationToken = default)
+        private readonly IEventService _eventService;
+        private readonly TokenService _tokenService;
+
+        public EventController(IEventService eventService, TokenService tokenService)
         {
-            return new JsonResult(await eventService.Get(search,cancellationToken));
+            _eventService = eventService;
+            _tokenService = tokenService;
+        }
+
+        [HttpGet("{search}")]
+        [Authorize(Policy = "RequireJwt")]
+        public async Task<IActionResult> Get(string search, CancellationToken cancellationToken = default)
+        {
+            var result = await _eventService.Get(search, cancellationToken);
+            if (result == null)
+            {
+                return NotFound("No events found.");
+            }
+            return Ok(result);
         }
 
         [HttpGet]
-        public async Task<JsonResult> Get(CancellationToken cancellationToken = default)
+        [Authorize(Policy = "RequireJwt")]
+        public async Task<IActionResult> Get(CancellationToken cancellationToken = default)
         {
-            return new JsonResult(await eventService.Get(cancellationToken));
+            var result = await _eventService.Get(cancellationToken);
+            if (result == null)
+            {
+                return NotFound("No events found.");
+            }
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<JsonResult> Create(Event @event, CancellationToken cancellationToken = default)
+        [AllowAnonymous] // Permitir acesso sem autenticação para criar o evento e obter o token
+        public async Task<IActionResult> Create([FromBody] Event @event, CancellationToken cancellationToken = default)
         {
-            return new JsonResult(await eventService.Create(@event,cancellationToken));
+            if (@event == null)
+            {
+                return BadRequest("Event data is required.");
+            }
+
+            var result = await _eventService.Create(@event, cancellationToken);
+            if (result == null)
+            {
+                return StatusCode(500, "An error occurred while creating the event.");
+            }
+
+            var token = _tokenService.GeneratePlaceResult(@event);
+            return Ok(new { Event = result, Token = token });
         }
     }
 }
