@@ -54,3 +54,9 @@ jobs:
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFC982AFC2EE44BF933EE86A57FE4EF9 }}
+
+      - name: Set environment variables
+        run: |
+          echo "BackendUrl=https://api-desafiodiadorock-geh0e9e3gkfpbzgg.eastus-01.azurewebsites.net/" >> $GITHUB_ENV
+          echo "FrontendUrl=https://ui-desafiodiarock.raphaelfalves.dev/" >> $GITHUB_ENV
+          echo "GoogleApiKey=AIzaSyAqN-qevL5e5RtlGTbcUwEVkh7vi6MPcuM" >> $GITHUB_ENV
