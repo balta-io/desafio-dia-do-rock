@@ -45,10 +45,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build  src/DesafioDiaDoRock.PublicApi/DesafioDiaDoRock.UI.csproj --configuration Release
+        run: dotnet build  src/DesafioDiaDoRock.UI/DesafioDiaDoRock.UI.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish src/DesafioDiaDoRock.PublicApi/DesafioDiaDoRock.UI.csproj -c Release -o ${{env.DOTNET_ROOT}}/ui-desafiodiadorock
+        run: dotnet publish src/DesafioDiaDoRock.UI/DesafioDiaDoRock.UI.csproj -c Release -o ${{env.DOTNET_ROOT}}/ui-desafiodiadorock
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
