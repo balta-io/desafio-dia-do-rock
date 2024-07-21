@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core apps to Azure Web Apps
+name: Build and deploy ASP.Net Core app to Azure Web App - api-desafiodiadorock
 
 on:
   push:
@@ -21,21 +21,20 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Build API with dotnet
+      - name: Build with dotnet
         run: dotnet build src/DesafioDiaDoRock.PublicApi/DesafioDiaDoRock.PublicApi.csproj --configuration Release
 
-      - name: dotnet publish API
+      - name: dotnet publish
         run: dotnet publish src/DesafioDiaDoRock.PublicApi/DesafioDiaDoRock.PublicApi.csproj -c Release -o ${{env.DOTNET_ROOT}}/api-desafiodiadorock
 
-      - name: Upload API artifact for deployment job
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-api-app
           path: ${{env.DOTNET_ROOT}}/api-desafiodiadorock
-
+  
   build-ui:
     runs-on: ubuntu-latest
-    needs: build-api
 
     steps:
       - uses: actions/checkout@v4
@@ -45,58 +44,58 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Build UI with dotnet
-        run: dotnet build src/DesafioDiaDoRock.Ui/DesafioDiaDoRock.Ui.csproj --configuration Release
+      - name: Build with dotnet
+        run: dotnet build  src/DesafioDiaDoRock.PublicApi/DesafioDiaDoRock.UI.csproj --configuration Release
 
-      - name: dotnet publish UI
-        run: dotnet publish src/DesafioDiaDoRock.Ui/DesafioDiaDoRock.Ui.csproj -c Release -o ${{env.DOTNET_ROOT}}/ui-desafiodiadorock
+      - name: dotnet publish
+        run: dotnet publish src/DesafioDiaDoRock.PublicApi/DesafioDiaDoRock.UI.csproj -c Release -o ${{env.DOTNET_ROOT}}/ui-desafiodiadorock
 
-      - name: Upload UI artifact for deployment job
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: .net-ui-app
+          name: .net-app
           path: ${{env.DOTNET_ROOT}}/ui-desafiodiadorock
-
+  
   deploy-api:
     runs-on: ubuntu-latest
     needs: build-api
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-api.outputs.webapp-url }}
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download API artifact from build job
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-api-app
 
-      - name: Deploy API to Azure Web App
-        id: deploy-api
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'api-desafiodiadorock'
           slot-name: 'Production'
-          package: ${{ github.workspace }}/api-desafiodiadorock
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFC982AFC2EE44BF933EE86A57FE4EF9 }}
 
   deploy-ui:
     runs-on: ubuntu-latest
     needs: build-ui
     environment:
-      name: 'Production'
-      url: ${{ steps.deploy-ui.outputs.webapp-url }}
-
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
     steps:
-      - name: Download UI artifact from build job
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: .net-ui-app
-
-      - name: Deploy UI to Azure Web App
-        id: deploy-ui
+          name: .net-app
+      
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'ui-desafiodiadorock'
-          slot-name: 'Production'
-          package: ${{ github.workspace }}/ui-desafiodiadorock
+          slot-name: 'production'
+          package: .
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_f2e39908ee4445a1a23ef1c69089a116 }}
