@@ -1,0 +1,6 @@
+@DesafioDiaDoRock.PublicApi_HostAddress = http://localhost:5240
+
+GET {{DesafioDiaDoRock.PublicApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

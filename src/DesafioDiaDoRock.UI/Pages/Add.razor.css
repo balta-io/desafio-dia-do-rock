@@ -1,0 +1,91 @@
+﻿.div-add button {
+    width: 335px;
+    height: 60px;
+    border-radius: 8px;
+    background-color: #8625D2;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    margin: 40px 20px 0px 20px;
+}
+
+.div-add .text-help {
+    width: 100%;
+    font-size: 16px;
+    color: #848487;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.progress {
+    display: flex;
+    height: 7px;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #8625D2;
+    border-radius: .25rem;
+    margin: 48px 20px 0px 20px;
+    width: 335px;
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #711FB2;
+    transition: width .6s ease;
+}
+
+.div-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-result img {
+    margin-top: 138px;
+}
+
+.div-result h3 {
+    font-size: 24px;
+    margin-top: 36px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.div-result p {
+    color: #848487;
+    margin: 12px 21px 28px 21px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.div-result button {
+    width: 335px;
+    height: 60px;
+    border-radius: 8px;
+    background-color: #8625D2;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    margin: 0px 20px 0px 20px;
+}
+
+@media (max-width: 459px) {
+    .div-add button {
+        width: 90%;
+        margin: 40px 5% 0px 5%;
+    }
+
+    .div-result button {
+        width: 90%;
+        margin: 0px 5% 0px 5%;
+    }
+}
