@@ -27,8 +27,13 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<TokenService>();
 
 builder.AddConfiguration();
+
+string BackendUrl = Configuration.BackendUrl;
+string FrontendUrl = Configuration.FrontendUrl;
+
 builder.AddCrossOrigin();
 builder.Services.AddControllers();
+
 
 // Configuração JWT
 builder.Services.AddServiceJwt();
@@ -64,6 +69,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.AddServiceDefaults(); //Classe padrão de serviço, registrado com projeto de API
 
 var app = builder.Build();
 

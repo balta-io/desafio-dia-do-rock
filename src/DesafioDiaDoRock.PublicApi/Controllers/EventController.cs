@@ -22,7 +22,7 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
         }
 
         [HttpGet("{search}")]
-        [Authorize(Policy = "RequireJwt")]
+        //[Authorize(Policy = "RequireJwt")]
         public async Task<IActionResult> Get(string search, CancellationToken cancellationToken = default)
         {
             var result = await _eventService.Get(search, cancellationToken);
@@ -34,7 +34,7 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "RequireJwt")]
+        //[Authorize(Policy = "RequireJwt")]
         public async Task<IActionResult> Get(CancellationToken cancellationToken = default)
         {
             var result = await _eventService.Get(cancellationToken);
@@ -46,7 +46,7 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] // Permitir acesso sem autenticação para criar o evento e obter o token
+         //[AllowAnonymous] Permitir acesso sem autenticação para criar o evento e obter o token
         public async Task<IActionResult> Create([FromBody] Event @event, CancellationToken cancellationToken = default)
         {
             if (@event == null)
