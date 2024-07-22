@@ -12,41 +12,43 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
 {
     public class TokenService
     {
-        private readonly JwtSettings _jwtSettings;
-
-        public TokenService(IOptions<JwtSettings> jwtSettings)
+        public static string GenerateToken(User usuario)
         {
-            _jwtSettings = jwtSettings.Value;
-        }
-
-        public string GeneratePlaceResult(Event @event)
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
-            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
-
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(Configuration.SECRET);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = GenerateClaims(@event),
-                SigningCredentials = credentials,
-                Expires = DateTime.UtcNow.AddHours(6),
-                Issuer = _jwtSettings.Issuer,
-                Audience = _jwtSettings.Audience
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new(ClaimTypes.Name, usuario.Email),
+                    new("id", usuario.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddMonths(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-
-            var token = handler.CreateToken(tokenDescriptor);
-            return handler.WriteToken(token);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
-        private static ClaimsIdentity GenerateClaims(Event @event)
+
+        public static int GetUserIdFromToken(string token)
         {
-            var ci = new ClaimsIdentity();
-            ci.AddClaim(new Claim(ClaimTypes.Name, @event.Address));
-            foreach (var role in @event.roles)
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadToken(token?.Split(" ").Last()) as JwtSecurityToken;
+
+            if (jwtToken == null || !jwtToken.Claims.Any(c => c.Type == "id"))
             {
-                ci.AddClaim(new Claim(ClaimTypes.Role, role));
+                throw new ArgumentException("Token inválido ou sem ID do usuário.");
             }
-            return ci;
+
+            var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "id");
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                throw new ArgumentException("ID do usuário ausente ou inválido no token.");
+            }
+
+            return userId;
         }
     }
 }
+

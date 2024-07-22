@@ -6,4 +6,5 @@ namespace DesafioDiaDoRock.Infraestructure.Data;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options ) : DbContext(options)
 {
     public DbSet<Event> Event { get; set; }
+    public DbSet<User> User { get; set; }
 }
