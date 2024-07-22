@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\aspire\DesafioDiaDoRock.Aspire\DesafioDiaDoRock.Aspire.ServiceDefaults\DesafioDiaDoRock.Aspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\DesafioDiaDoRock.Infraestructure\DesafioDiaDoRock.Infraestructure.csproj" />
   </ItemGroup>
 

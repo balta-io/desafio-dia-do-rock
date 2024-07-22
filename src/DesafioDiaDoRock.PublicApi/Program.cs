@@ -34,6 +34,7 @@ builder.AddConfiguration();
 builder.AddCrossOrigin();
 builder.Services.AddControllers();
 
+
 // Configuração JWT
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddTransient<TokenService>();
@@ -96,6 +97,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.AddServiceDefaults(); //Classe padrão de serviço, registrado com projeto de API
 
 var app = builder.Build();
 
