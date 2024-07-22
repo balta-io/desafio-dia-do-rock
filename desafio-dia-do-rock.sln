@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.PublicApi"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{64F893C3-6AFF-4F27-B074-A01B82C51859}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDiaDoRock.Aspire.AppHost", "aspire\DesafioDiaDoRock.Aspire\DesafioDiaDoRock.Aspire.AppHost\DesafioDiaDoRock.Aspire.AppHost.csproj", "{563688FF-AE23-4F57-997F-57AB906A3AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.Aspire.AppHost", "aspire\DesafioDiaDoRock.Aspire\DesafioDiaDoRock.Aspire.AppHost\DesafioDiaDoRock.Aspire.AppHost.csproj", "{563688FF-AE23-4F57-997F-57AB906A3AD5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.Aspire.ServiceDefaults", "aspire\DesafioDiaDoRock.Aspire\DesafioDiaDoRock.Aspire.ServiceDefaults\DesafioDiaDoRock.Aspire.ServiceDefaults.csproj", "{A965EF4D-B154-4890-BCEB-7E6C96572D6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioDiaDoRock.Aspire.Teste", "src\DesafioDiaDoRock.Aspire.Teste\DesafioDiaDoRock.Aspire.Teste.csproj", "{966DD397-DCF7-4ED0-9AEA-F31F901CE52D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioDiaDoRock.Aspire.Teste", "src\DesafioDiaDoRock.Aspire.Teste\DesafioDiaDoRock.Aspire.Teste.csproj", "{966DD397-DCF7-4ED0-9AEA-F31F901CE52D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

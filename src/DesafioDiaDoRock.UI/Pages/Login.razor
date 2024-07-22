@@ -1,0 +1,48 @@
+﻿@page "/"
+@using DesafioDiaDoRock.ApplicationCore.DTO.UserDTO
+@layout LoginLayout
+@inject IUserService userService;
+@inject NavigationManager Navigation
+<PageTitle>Login</PageTitle>
+
+
+
+
+<div class="area-login-background d-none d-md-block">
+    <img src="photo-1506157786151-b8491531f063.jpeg" />
+</div>
+
+<div class="area-form">
+    <form @onsubmit="HandleLogin">
+        <h1 class="titulo">Rock Day</h1>
+        <h2 class="subtitulo">The place where rock never stops!</h2>
+
+        <input class="input-form" type="text" placeholder="Enter your email" @bind="email">
+        <input class="input-form" type="password" placeholder="Enter your password" @bind="password">
+        <Button Text="Login" ></Button>
+
+        <p>Don't have an account ? <a href="signup">SignUp</a></p>
+    </form>
+</div>
+
+
+
+@code {
+    private string? email;
+    private string? password;
+
+    private async Task HandleLogin()
+    {
+        var loginDTO = new LoginDTO
+        {
+            Email = email,
+            Password = password
+        };
+
+        var response = await userService.Login(loginDTO);
+
+        if (response.IsSuccess)
+            Navigation.NavigateTo("/home");            
+    }
+
+}

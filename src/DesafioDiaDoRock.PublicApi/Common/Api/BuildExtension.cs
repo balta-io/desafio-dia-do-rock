@@ -19,13 +19,9 @@ namespace DesafioDiaDoRock.PublicApi.Common.Api
             options => options.AddPolicy(
                     ApiConfiguration.CorsPolicyName,
                     policy => policy
-                        .WithOrigins([
-                            Configuration.BackendUrl,
-                            Configuration.FrontendUrl
-                        ])
+                        .AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .AllowCredentials()
                 ));
         }
 

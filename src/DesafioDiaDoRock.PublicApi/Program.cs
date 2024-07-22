@@ -28,8 +28,8 @@ builder.Services.AddTransient<TokenService>();
 
 builder.AddConfiguration();
 
-string BackendUrl = Configuration.BackendUrl;
-string FrontendUrl = Configuration.FrontendUrl;
+//string BackendUrl = Configuration.BackendUrl;
+//string FrontendUrl = Configuration.FrontendUrl;
 
 builder.AddCrossOrigin();
 builder.Services.AddControllers();
@@ -70,7 +70,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.AddServiceDefaults(); //Classe padrão de serviço, registrado com projeto de API
+builder.AddServiceDefaults(); 
 
 var app = builder.Build();
 
