@@ -31,6 +31,10 @@ builder.Services.AddScoped<IPlacesService, PlacesService>();
 builder.Services.AddTransient<TokenService>();
 
 builder.AddConfiguration();
+
+string BackendUrl = Configuration.BackendUrl;
+string FrontendUrl = Configuration.FrontendUrl;
+
 builder.AddCrossOrigin();
 builder.Services.AddControllers();
 
