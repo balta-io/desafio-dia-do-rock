@@ -31,4 +31,10 @@ public class JsInterop(IJSRuntime _jsRuntime)
     {
         await _jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "token", token);
     }
+
+    public async Task<string>? GetToken()
+    {
+        
+       return await _jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "token");
+    }
 }

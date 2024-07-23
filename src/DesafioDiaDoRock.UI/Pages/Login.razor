@@ -1,12 +1,15 @@
 ﻿@page "/"
 @using DesafioDiaDoRock.ApplicationCore.DTO.UserDTO
 @using System.Text.Json
+@using DesafioDiaDoRock.UI.Services
 @layout LoginLayout
 @inject IUserService userService;
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
-<PageTitle>Login</PageTitle>
 
+
+
+<PageTitle>Login</PageTitle>
 
 
 
@@ -52,8 +55,14 @@
         {
             var jsonString = response.Data.ToString();
             var loginResponse = JsonSerializer.Deserialize<LoginResponse>(jsonString);
-            var jsInterop = new JsInterop(JSRuntime);
-            await jsInterop.SetToken(loginResponse.token);
+
+            var customAuthStateProvider = (AuthenticationService)AuthStateProvider;
+
+            customAuthStateProvider.UpdateAuthenticationState(loginResponse.token);
+
+            // var jsInterop = new JsInterop(JSRuntime);
+            // await jsInterop.SetToken(loginResponse.token);
+
             Navigation.NavigateTo("/home");
         }
            
