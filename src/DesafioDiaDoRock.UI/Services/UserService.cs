@@ -5,6 +5,7 @@ using DesafioDiaDoRock.ApplicationCore.Responses;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace DesafioDiaDoRock.UI.Services
 {
@@ -18,7 +19,14 @@ namespace DesafioDiaDoRock.UI.Services
             if(response.IsSuccessStatusCode)
                 return await response.Content.ReadFromJsonAsync<Response<User>>();
             else
-                return new Response<User>(null, (int)HttpStatusCode.BadRequest, "Algo deu errado");
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                JsonDocument doc = JsonDocument.Parse(errorContent);
+                JsonElement root = doc.RootElement;
+                root.TryGetProperty("message", out JsonElement messageElement);
+                string errorMessage = messageElement.GetString();
+                return new Response<User>(null, (int)response.StatusCode, errorMessage);
+            }
 
         }
 
@@ -46,7 +54,12 @@ namespace DesafioDiaDoRock.UI.Services
             }
             else
             {
-                return new Response<dynamic>(null, (int)HttpStatusCode.BadRequest, "Email ou senha inválida");
+                var errorContent = await response.Content.ReadAsStringAsync();
+                JsonDocument doc = JsonDocument.Parse(errorContent);
+                JsonElement root = doc.RootElement;
+                root.TryGetProperty("message", out JsonElement messageElement);
+                string errorMessage = messageElement.GetString();
+                return new Response<dynamic>(null, (int)response.StatusCode, errorMessage);
             }
         }
 

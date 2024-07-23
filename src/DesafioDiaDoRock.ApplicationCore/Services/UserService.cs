@@ -17,12 +17,12 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
         public async Task<Response<User>> Create(RegisterDTO userDTO)
         {
             if (userDTO.Password != userDTO.ConfirmPassword)
-                return new(null, (int)HttpStatusCode.Conflict, "Senha e Confirmação de senha precisam ser a mesma");
+                return new(null, (int)HttpStatusCode.Conflict, "Password and Password Confirmation must be the same");
 
             var user = new User(new(userDTO.Name), (userDTO.Email), (userDTO.Password));
 
             if (await userRepository.AlredyExist(userDTO.Email))
-                return new(null, (int)HttpStatusCode.Conflict, "Usuário com mesmo email já cadastrado");
+                return new(null, (int)HttpStatusCode.Conflict, "User with the same email already registered");
 
             return new(await userRepository.Create(user));
 
@@ -38,7 +38,7 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
                     token = TokenService.GenerateToken(user)
                 });
 
-            return new(null, (int)HttpStatusCode.BadRequest, "Email ou senha inválida");
+            return new(null, (int)HttpStatusCode.BadRequest, "Invalid email or password");
         }
          
         public async Task<User> Get(int? id)

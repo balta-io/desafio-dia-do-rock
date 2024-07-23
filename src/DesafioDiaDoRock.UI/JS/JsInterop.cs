@@ -26,4 +26,9 @@ public class JsInterop(IJSRuntime _jsRuntime)
     {
         await _jsRuntime.InvokeVoidAsync("removeMarkers");
     }
+
+    public async Task SetToken(string token)
+    {
+        await _jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "token", token);
+    }
 }
