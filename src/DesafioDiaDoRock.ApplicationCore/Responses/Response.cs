@@ -4,7 +4,7 @@ namespace DesafioDiaDoRock.ApplicationCore.Responses;
 
 public class Response<TData>
 {
-    private int _code = Configuration.DefaultStatusCode;
+    public int _code = Configuration.DefaultStatusCode;
 
     [JsonConstructor]
     public Response() => _code = Configuration.DefaultStatusCode;
