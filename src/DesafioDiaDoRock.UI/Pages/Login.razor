@@ -54,7 +54,6 @@
             var loginResponse = JsonSerializer.Deserialize<LoginResponse>(jsonString);
             var jsInterop = new JsInterop(JSRuntime);
             await jsInterop.SetToken(loginResponse.token);
-
             Navigation.NavigateTo("/home");
         }
            
