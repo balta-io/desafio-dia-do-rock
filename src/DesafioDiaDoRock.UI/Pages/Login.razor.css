@@ -1,0 +1,94 @@
+﻿
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.area-login-background {
+    height: 100vh;
+    width: 55%;
+    display: block;
+    float: left;
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.area-form {
+    height: 100vh;
+    width: 45%;
+    float: left;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.titulo {
+    font-size: 50px;
+    text-align: center;
+    letter-spacing: 7px;
+    padding: 0;
+    margin-bottom: 6px;
+}
+
+.subtitulo {
+    font-size: 30px;
+    font-weight: 300;
+    margin: 10px 0 30px 0;
+    padding: 0;
+    text-align: center;
+}
+
+.input-form {
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px 10px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #00000000;
+    margin-bottom: 25px;
+    transition: 0.3s linear all;
+    box-shadow: inset 1px 1px 2px #babecc80, inset -1px -1px 2px #d8d8d8d0;
+    &:focus
+
+{
+    border: 1px solid black;
+}
+
+}
+
+p {
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    transition: color 0.3s linear;
+    &:hover
+
+{
+    color: darkgray;
+}
+
+}
+
+
+@media only screen and (max-width: 767px) {
+    .area-form {
+        width: 100%;
+    }
+}

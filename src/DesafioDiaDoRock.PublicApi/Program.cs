@@ -1,9 +1,6 @@
-using DesafioDiaDoRock.ApplicationCore;
-using DesafioDiaDoRock.ApplicationCore.Entities;
 using DesafioDiaDoRock.ApplicationCore.Interfaces.Integrations;
 using DesafioDiaDoRock.ApplicationCore.Interfaces.Repositories;
 using DesafioDiaDoRock.ApplicationCore.Interfaces.Services;
-using DesafioDiaDoRock.ApplicationCore.Models;
 using DesafioDiaDoRock.ApplicationCore.Models.Integrations;
 using DesafioDiaDoRock.ApplicationCore.Services;
 using DesafioDiaDoRock.Infraestructure.Data;
@@ -12,9 +9,6 @@ using DesafioDiaDoRock.Infraestructure.Repository;
 using DesafioDiaDoRock.PublicApi.Common.Api;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -22,53 +16,28 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuração do DbContext
-builder.Services.AddDbContext<ApplicationDbContext>(a => a.UseInMemoryDatabase("Context"));
+builder.Services.AddDbContext<ApplicationDbContext>(a => a.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registro de dependências
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IPlacesService, PlacesService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<TokenService>();
 
 builder.AddConfiguration();
 
-string BackendUrl = Configuration.BackendUrl;
-string FrontendUrl = Configuration.FrontendUrl;
+//string BackendUrl = Configuration.BackendUrl;
+//string FrontendUrl = Configuration.FrontendUrl;
 
 builder.AddCrossOrigin();
 builder.Services.AddControllers();
 
+
 // Configuração JWT
-builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.AddServiceJwt();
 builder.Services.AddTransient<TokenService>();
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.Issuer,
-        ValidAudience = jwtSettings.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
-    };
-});
-
-// Configuração de autorização
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireJwt", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-    });
-});
 
 // Configuração do Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -100,6 +69,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.AddServiceDefaults(); 
 
 var app = builder.Build();
 

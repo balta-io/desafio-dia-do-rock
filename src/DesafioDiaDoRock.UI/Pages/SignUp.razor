@@ -1,0 +1,55 @@
+﻿@page "/signup"
+@using DesafioDiaDoRock.ApplicationCore.DTO.UserDTO
+@layout SignUpLayout
+@inject NavigationManager Navigation
+@inject IUserService userService;
+<PageTitle>SignUp</PageTitle>
+
+<div class="content-area">
+    <form class="area-form" @onsubmit="HandleCreate">
+        <h1 class="titulo">Rock Day</h1>
+
+        <input class="input-form" type="text" placeholder="Enter your name" @bind="name" required>
+        <input class="input-form" type="email" placeholder="Enter your email" @bind="email" required>
+        <input class="input-form" type="password" placeholder="Enter your password" @bind="password" required>
+        <input class="input-form" type="password" placeholder="Confirm your password" @bind="confirmPassword" required>
+
+
+        <Button Text="Sign Up"></Button>
+
+        <p class="error-message-response">@errorMessage</p>
+
+        <p>Already have an account ? <a href="/">Login</a></p>
+    </form>
+</div>
+
+
+
+@code {
+    private string? name;
+    private string? email;
+    private string? password;
+    private string? confirmPassword;
+    private string? errorMessage;
+
+    private async Task HandleCreate()
+    {
+        var userDTO = new RegisterDTO
+        {
+            Name = name,
+            Email = email,
+            Password = password,
+            ConfirmPassword = confirmPassword
+        };
+
+        var response = await userService.Create(userDTO);
+
+        if (response.IsSuccess)
+            Navigation.NavigateTo("/");
+        
+        else
+            errorMessage = response.Message;
+           
+    }
+
+}

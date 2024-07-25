@@ -236,7 +236,12 @@ code {
     width: 90%;
 }
 
-@media (max-width: 459px){
+.error-message-response{
+    font-size: x-small;
+    font-weight: bold
+}
+
+@media (max-width: 459px) {
     .actionbar {
         width: calc(100% - 64px);
     }

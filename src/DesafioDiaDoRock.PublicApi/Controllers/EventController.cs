@@ -60,8 +60,7 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
                 return StatusCode(500, "An error occurred while creating the event.");
             }
 
-            var token = _tokenService.GeneratePlaceResult(@event);
-            return Ok(new { Event = result, Token = token });
+            return Ok(new { Event = result });
         }
     }
 }

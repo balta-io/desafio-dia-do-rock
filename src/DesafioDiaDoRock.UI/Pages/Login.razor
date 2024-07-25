@@ -1,0 +1,73 @@
+﻿@page "/"
+@using DesafioDiaDoRock.ApplicationCore.DTO.UserDTO
+@using System.Text.Json
+@layout LoginLayout
+@inject IUserService userService;
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+<PageTitle>Login</PageTitle>
+
+
+
+
+<div class="area-login-background d-none d-md-block">
+    <img src="photo-1506157786151-b8491531f063.jpeg" />
+</div>
+
+<div class="area-form">
+    <form @onsubmit="HandleLogin">
+        <h1 class="titulo">Rock Day</h1>
+        <h2 class="subtitulo">The place where rock never stops!</h2>
+
+        <input class="input-form" type="email" placeholder="Enter your email" @bind="email" required>
+        <input class="input-form" type="password" placeholder="Enter your password" @bind="password" required>
+        <Button Text="Login" ></Button>
+
+        <p class="error-message-response">@errorMessage</p>
+
+        <p >Don't have an account ? <a href="signup">SignUp</a></p>
+    </form>
+</div>
+
+
+
+@code {
+    private string? email;
+    private string? password;
+    private string? errorMessage;
+    private string? token;
+
+
+    private async Task HandleLogin()
+    {
+        var loginDTO = new LoginDTO
+        {
+            Email = email,
+            Password = password
+        };
+
+        var response = await userService.Login(loginDTO);
+
+        if (response.IsSuccess)
+        {
+            var jsonString = response.Data.ToString();
+            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(jsonString);
+            var jsInterop = new JsInterop(JSRuntime);
+            await jsInterop.SetToken(loginResponse.token);
+            Navigation.NavigateTo("/home");
+        }
+           
+
+        else
+            errorMessage = response.Message;
+    }
+
+
+    private class LoginResponse
+    {
+        public string token { get; set; } = string.Empty;
+    }
+
+}
+
+
