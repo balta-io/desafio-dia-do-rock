@@ -60,12 +60,12 @@
     line-height: 3rem;
 }
 
-.theme-container.light-mode .nav-item.active {
+.sidebar.light-mode .nav-item.active {
     background-color: #E5E6E0;
 }
 
-.theme-container.dark-mode .nav-item.active {
-    background-color: #1a1a1a;
+.sidebar.dark-mode .nav-item.active {
+    background-color: #1A191F;
 }
 
 .nav-link.active {

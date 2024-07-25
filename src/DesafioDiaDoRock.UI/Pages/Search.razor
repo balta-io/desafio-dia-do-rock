@@ -5,39 +5,37 @@
 
 <PageTitle>Pesquisa</PageTitle>
 
-<div class="theme-container @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
-    <div class="actionbar">
-        <div class="div-input">
-            <label for="search">Buscar um evento</label>
-            <div>
-                <input type="text" id="search" @onchange="(e) => SearchEvent(e)" autocomplete="off"/>
-                @if (ThemeService.IsDarkMode == true)
-                {
-                    <img src="/Icon-Search-White.svg" class="img-input" />
-                }
-                else
-                {
-                    <img src="/Icon-Search-Black.svg" class="img-input" />
-                }
+<div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
+    <div class="div-input">
+        <label for="search">Buscar um evento</label>
+        <div>
+            <input type="text" id="search" @onchange="(e) => SearchEvent(e)" autocomplete="off" />
+            @if (ThemeService.IsDarkMode == true)
+            {
+                <img src="/Icon-Search-White.svg" class="img-input" />
+            }
+            else
+            {
+                <img src="/Icon-Search-Black.svg" class="img-input" />
+            }
+        </div>
+    </div>
+
+    @foreach (var e in events)
+    {
+        <div class="div-search-resonse">
+            <img src="@e.UrlImage" />
+
+            <div class="resonse-address">
+                <h5>@e.NameLocation</h5>
+                <p>@e.Address</p>
+            </div>
+
+            <div class="resonse-hour">
+                @e.FormatDateResponse();
             </div>
         </div>
-
-        @foreach (var e in events)
-        {
-            <div class="div-search-resonse">
-                <img src="@e.UrlImage" />
-
-                <div class="resonse-address">
-                    <h5>@e.NameLocation</h5>
-                    <p>@e.Address</p>
-                </div>
-
-                <div class="resonse-hour">
-                    @e.FormatDateResponse();
-                </div>
-            </div>
-        }
-    </div>
+    }
 </div>
 
 @code {
@@ -57,6 +55,6 @@
             await jsInterOp.CreatMarker(new(@event.Latitude, @event.Longitude), @event);
         }
     }
-    
+
 }
 

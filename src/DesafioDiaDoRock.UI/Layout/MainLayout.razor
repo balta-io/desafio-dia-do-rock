@@ -8,7 +8,7 @@
 <MudSnackbarProvider />
 
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
         <NavMenu />
     </div>
 
