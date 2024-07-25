@@ -3,100 +3,110 @@
 @inject IJSRuntime JSRuntime
 @inject IPlacesService placeService
 @inject IThemeService ThemeService
+@inject ILoginService loginService
 
 <PageTitle>Adicionar Evento</PageTitle>
 
-<div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
-    @if (created)
-    {
-        <div class="div-result">
-            @if (result)
-            {
-                <div><img src="/Icon-Checkmark-Circle.svg" /></div>
-                <div><h3>Obrigado pelo envio!</h3></div>
-                <div><p>Seu evento será avaliado pela nossa equipe e você receberá um E-mail em breve com o resultado da nossa aprovação</p></div>
-                <button type="button">Fechar</button>
-
-            }
-            else
-            {
-
-                <div><img src="/Icon-Error-Circle.svg" /></div>
-                <div><h3>Ops, algo saiu errado</h3></div>
-                <div><p>Ocorreu uma falha ao tentar submeter seu evento, por favor verifique sua conexão com a internet e tente novamente.</p></div>
-                <button type="button">Fechar</button>
-            }
-        </div>
-    }
-    else
-    {
-        <EditForm Model="eventDTO" OnSubmit="Create">
-            <div class="div-add">
-                <div class="div-input">
-                    <label for="band">Banda</label>
-                    <div>
-                        <input type="text" id="band" @bind="eventDTO.Band" />
-                        @if (ThemeService.IsDarkMode == true)
-                        {
-                            <img src="/Icon-Search-White.svg" class="img-input" />
-                        }
-                        else
-                        {
-                            <img src="/Icon-Search-Black.svg" class="img-input" />
-                        }
-                    </div>
-                </div>
-
-                <div class="div-input">
-                    <label for="date">Data</label>
-                    <div>
-                        <input type="text" id="date" @onchange="(e) => UpdateDate(e)" />
-                        @if (ThemeService.IsDarkMode == true)
-                        {
-                            <img src="/Icon-Calendar-White.svg" class="img-input-date" />
-                        }
-                        else
-                        {
-                            <img src="/Icon-Date.svg" class="img-input-date" />
-                        }
-                    </div>
-                </div>
-
-                <div class="div-input">
-                    <MudItem id="div-location">
-                        <label for="location">Local</label>
-                        <MudAutocomplete T="string" id="location" @bind-Value="eventDTO.Address" SearchFunc="@UpdateLocation"
-                                         ResetValueOnEmptyText="true"
-                                         CoerceText="false" CoerceValue="false" Class="div-input-input" />
-                        @if (ThemeService.IsDarkMode == true)
-                        {
-                            <img src="/Icon-Map-White.svg" class="img-input-location" />
-                        }
-                        else
-                        {
-                            <img src="/Icon-Map-Black.svg" class="img-input-location" />
-                        }
-                    </MudItem>
-                </div>
-
-                @if (processing)
+@if (loginService.IsNecessaryAuthenticated)
+{
+    <div class="position-absolute vw-100" style="z-index:3;">
+        <Login />
+    </div>
+}
+else
+{
+    <div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
+        @if (created)
+        {
+            <div class="div-result">
+                @if (result)
                 {
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 70%"></div>
-                    </div>
+                    <div><img src="/Icon-Checkmark-Circle.svg" /></div>
+                    <div><h3>Obrigado pelo envio!</h3></div>
+                    <div><p>Seu evento será avaliado pela nossa equipe e você receberá um E-mail em breve com o resultado da nossa aprovação</p></div>
+                    <button type="button">Fechar</button>
+
                 }
                 else
                 {
-                    <button type="submit" class="button">
-                        Salvar Evento
-                    </button>
-                    <p class="text-help">Preciso de ajuda</p>
+
+                    <div><img src="/Icon-Error-Circle.svg" /></div>
+                    <div><h3>Ops, algo saiu errado</h3></div>
+                    <div><p>Ocorreu uma falha ao tentar submeter seu evento, por favor verifique sua conexão com a internet e tente novamente.</p></div>
+                    <button type="button">Fechar</button>
                 }
             </div>
+        }
+        else
+        {
+            <EditForm Model="eventDTO" OnSubmit="Create">
+                <div class="div-add">
+                    <div class="div-input">
+                        <label for="band">Banda</label>
+                        <div>
+                            <input type="text" id="band" @bind="eventDTO.Band" />
+                            @if (ThemeService.IsDarkMode == true)
+                            {
+                                <img src="/Icon-Search-White.svg" class="img-input" />
+                            }
+                            else
+                            {
+                                <img src="/Icon-Search-Black.svg" class="img-input" />
+                            }
+                        </div>
+                    </div>
 
-        </EditForm>
-    }
-</div>
+                    <div class="div-input">
+                        <label for="date">Data</label>
+                        <div>
+                            <input type="text" id="date" @onchange="(e) => UpdateDate(e)" />
+                            @if (ThemeService.IsDarkMode == true)
+                            {
+                                <img src="/Icon-Calendar-White.svg" class="img-input-date" />
+                            }
+                            else
+                            {
+                                <img src="/Icon-Date.svg" class="img-input-date" />
+                            }
+                        </div>
+                    </div>
+
+                    <div class="div-input">
+                        <MudItem id="div-location">
+                            <label for="location">Local</label>
+                            <MudAutocomplete T="string" id="location" @bind-Value="eventDTO.Address" SearchFunc="@UpdateLocation"
+                                             ResetValueOnEmptyText="true"
+                                             CoerceText="false" CoerceValue="false" Class="div-input-input" />
+                            @if (ThemeService.IsDarkMode == true)
+                            {
+                                <img src="/Icon-Map-White.svg" class="img-input-location" />
+                            }
+                            else
+                            {
+                                <img src="/Icon-Map-Black.svg" class="img-input-location" />
+                            }
+                        </MudItem>
+                    </div>
+
+                    @if (processing)
+                    {
+                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                    }
+                    else
+                    {
+                        <button type="submit" class="button">
+                            Salvar Evento
+                        </button>
+                        <p class="text-help">Preciso de ajuda</p>
+                    }
+                </div>
+
+            </EditForm>
+        }
+    </div>
+}
 
 @code {
     EventCreateRequest eventDTO = new();
@@ -158,18 +168,31 @@
                     "/ironmaiden.jpg"
                 ));
 
-        created = true;
         result = response.IsSuccess;
+        created = response.IsSuccess;
         processing = false;
+
+        if (response._code == 401)
+        {
+            loginService.ToggleAuthentication();
+            StateHasChanged();
+        }
 
     }
 
     protected override void OnInitialized()
     {
         ThemeService.OnThemeChanged += OnThemeChanged;
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
+
     }
 
     private void OnThemeChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
+
+    private void OnAuthenticationChanged(bool isDarkMode)
     {
         StateHasChanged();
     }

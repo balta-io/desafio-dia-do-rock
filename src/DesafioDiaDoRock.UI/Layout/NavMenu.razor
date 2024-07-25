@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 @inject IThemeService ThemeService
+@inject IJSRuntime JSRuntime
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
@@ -12,18 +13,32 @@
                 <img src="/Icon-Search.svg" class="icon-navitem" />
             </NavLink>
         </div>
-        <div class="nav-item @(IsNavLinkActive("/map") ? "active" : null)">
-            <NavLink class="nav-link" href="/map">
+        <div class="nav-item @(IsNavLinkActive("/") ? "active" : null)">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
                 <img src="/Icon-Map.svg" class="icon-navitem" />
             </NavLink>
         </div>
         <div class="nav-item @(IsNavLinkActive("/add") ? "active" : null)">
-            <NavLink class="nav-link" href="/add">
+            <NavLink class="nav-link" href="/add" Match="NavLinkMatch.All">
                 <img src="/Icon-Plus.svg" class="icon-navitem" />
             </NavLink>
         </div>
 
-        <div class="nav-item changer">
+            <div class="nav-item logout">
+                <button @onclick="LogOut">
+                    @if (ThemeService.IsDarkMode)
+                    {
+                        <img src="/logout-white.svg" width="30" />
+                    }
+
+                    else{
+                        <img src="/logout.svg" width="30" />
+                    }
+                </button>
+
+            </div>
+
+            <div class="nav-item changer">
 
             <MudThemeProvider IsDarkMode="@ThemeService.IsDarkMode" Theme="myCostomTheme" />
 
@@ -49,6 +64,13 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async void LogOut()
+    {
+        JsInterop jsInterop = new JsInterop(JSRuntime);
+        await jsInterop.SetToken("");
+        Navigation.NavigateTo("/login");
     }
 
 
@@ -83,6 +105,11 @@
 
     private bool IsNavLinkActive(string href)
     {
+        if (href == "/")
+        {
+            return Navigation.Uri.TrimEnd('/') == Navigation.BaseUri.TrimEnd('/');
+        }
+
         return Navigation.Uri.Contains(href, StringComparison.OrdinalIgnoreCase);
     }
 

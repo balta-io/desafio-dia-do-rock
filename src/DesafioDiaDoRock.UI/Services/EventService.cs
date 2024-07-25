@@ -23,7 +23,10 @@ namespace DesafioDiaDoRock.UI.Services
         {
             var result = await _client.PostAsJsonAsync<Event?>("/event", @event, cancellationToken);
 
-            return await result.Content.ReadFromJsonAsync<Response<Event?>>(cancellationToken) ?? new Response<Event?>(null, 400, "Não foi possível criar o evento.");
+            if (result.IsSuccessStatusCode)
+                return await result.Content.ReadFromJsonAsync<Response<Event?>>(cancellationToken);
+            else
+                return new Response<Event?>(null, (int)result.StatusCode, "Não foi possível criar o evento.");
         }
     }
 }
