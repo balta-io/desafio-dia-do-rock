@@ -72,9 +72,15 @@
     background-color: transparent;
 }
 
+.logout {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+}
+
 .changer {
     position: absolute;
-    bottom: 0;
+    bottom: 60px;
     left: 7px;
 }
 

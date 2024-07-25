@@ -1,5 +1,6 @@
 ﻿@inject NavigationManager Navigation
 @inject IThemeService ThemeService
+@inject IJSRuntime JSRuntime
 
 <div class="theme-container @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
     <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
@@ -22,6 +23,20 @@
                 <NavLink class="nav-link" href="/add">
                     <img src="/Icon-Plus.svg" class="icon-navitem" />
                 </NavLink>
+            </div>
+
+            <div class="nav-item logout">
+                <button @onclick="LogOut">
+                    @if (ThemeService.IsDarkMode)
+                    {
+                        <img src="/logout-white.svg" width="30" />
+                    }
+
+                    else{
+                        <img src="/logout.svg" width="30" />
+                    }
+                </button>
+
             </div>
 
             <div class="nav-item changer">
@@ -51,6 +66,13 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async void LogOut()
+    {
+        JsInterop jsInterop = new JsInterop(JSRuntime);
+        await jsInterop.SetToken("");
+        Navigation.NavigateTo("/");
     }
 
 
