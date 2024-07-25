@@ -24,8 +24,8 @@ namespace DesafioDiaDoRock.UI.Services
             JsInterop jsInterop = new JsInterop(jSRuntime);
 
             var token = await jsInterop.GetToken();
-
-            request.Headers.Add("Authorization", token);
+            if (token != null)
+                request.Headers.Add("Authorization", token);
 
             return await base.SendAsync(request, cancellationToken);
         }
