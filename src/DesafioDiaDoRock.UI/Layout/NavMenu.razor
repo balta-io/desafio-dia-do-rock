@@ -86,6 +86,8 @@
         JsInterop jsInterop = new JsInterop(JSRuntime);
         await jsInterop.SetToken("");
         Navigation.NavigateTo("/login");
+        loginService.ToggleAuthentication();
+        
     }
 
 
@@ -93,6 +95,7 @@
     {
         Navigation.LocationChanged += OnLocationChanged;
         ThemeService.OnThemeChanged += OnThemeChanged;
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
         isAdmin = await authenticationService.IsAdmin();
         loginService.OnAuthenticationChanged += OnAuthenticationChanged;
     }
@@ -138,5 +141,10 @@
     private void OnThemeChanged(bool isDarkMode)
     {
         StateHasChanged();
-    }    
+    }   
+    
+    public void OnAuthenticationChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
 }
