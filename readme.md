@@ -39,6 +39,10 @@ Raphael Francisco Alves / [Github](https://github.com/raphaelfalves)
 * Visualizar Eventos: A plataforma permite que os usuários vejam todos os eventos cadastrados.
 * Editar e Gerenciar Eventos: Os usuários podem atualizar as informações de eventos existentes.
 * Tema Escuro: A aplicação possui a funcionalidade de alternar entre os modos claro e escuro, proporcionando uma experiência personalizada para o usuário.
+* Login Admin: A plataforma inclui um login de administrador que pode aprovar os eventos cadastrados pelos usuários.
+* Após o evento ser aprovado, irá chegar uma mensagem no email de todos usuarios avisando que um evento novo foi aprovado!
+* ![image](https://github.com/user-attachments/assets/79c3c048-27e6-469f-814e-ee4ba1d701d0)
+
 
 # 💜 Participe
 Quer participar dos próximos desafios? Junte-se a [maior comunidade .NET do Brasil 🇧🇷 💜](https://balta.io/discord)
