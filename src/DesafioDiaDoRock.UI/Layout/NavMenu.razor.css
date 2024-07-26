@@ -109,6 +109,10 @@
     margin: auto;
 }
 
+#iconApprove {
+    color: #8625d2;
+}
+
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;

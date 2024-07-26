@@ -17,5 +17,6 @@ public class EventEntityTypeConfiguration : IEntityTypeConfiguration<Event>
 		builder.Property(x => x.Latitude).HasColumnType("decimal(18,6)").IsRequired();
 		builder.Property(x => x.Longitude).HasColumnType("decimal(18,6)").IsRequired();
 		builder.Property(x => x.UrlImage).IsRequired();
+		builder.Property(x => x.Approve);
 	}
 }

@@ -1,0 +1,75 @@
+﻿@page "/toapprove"
+@inject IEventService eventService
+@inject IJSRuntime JSRuntime
+@inject IThemeService ThemeService
+
+<div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" ) mt-lg-5">    
+    @foreach (var e in events)
+    {
+        <div class="div-search-resonse">
+            <img src="@e.UrlImage" />
+
+            <div class="resonse-address">
+                <h5>@e.NameLocation</h5>
+                <p>@e.Address</p>
+            </div>
+
+            <div class="resonse-hour">
+                @e.FormatDateResponse()
+            </div>
+            <div class="g-1">
+
+                <button class="m-2" type="button" @onclick="() => Validate(e.Id)"><MudIcon Icon="@Icons.Material.Filled.CheckCircleOutline" Title="Favorite" /></button>
+                <button class="m-2" type="button" @onclick="() => Validate(e.Id,false)"><MudIcon Icon="@Icons.Material.Filled.Close" Title="Favorite" /></button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    List<Event> events = [];
+    List<Event> eventsapprove = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        events = await eventService.GetAllToApprove() ?? [];
+        eventsapprove = await eventService.GetAllApprove() ?? [];
+        ThemeService.OnThemeChanged += OnThemeChanged;
+
+        await Map();
+    }
+
+    private void OnThemeChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
+
+    async void Validate(int id, bool approve = true)
+    {
+        var eventtoupdate = events.First(e => e.Id == id);
+
+        eventtoupdate.Approve = approve;
+
+        await eventService.UpdateEvent(eventtoupdate);
+
+        events.Remove(eventtoupdate);
+
+        await Map();
+
+        StateHasChanged();
+    }
+
+    async Task Map()
+    {
+        eventsapprove = await eventService.GetAllApprove() ?? [];
+
+        var jsInterOp = new JsInterop(JSRuntime);
+
+        await jsInterOp.RemoveMarkers();
+
+        foreach (var @event in eventsapprove)
+        {
+            await jsInterOp.CreatMarker(new(@event.Latitude, @event.Longitude), @event);
+        }
+    }
+}

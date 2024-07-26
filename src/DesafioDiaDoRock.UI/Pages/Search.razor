@@ -44,7 +44,7 @@
 
     async Task SearchEvent(ChangeEventArgs changeEventArgs)
     {
-        events = await eventService.Get(changeEventArgs.Value?.ToString() ?? string.Empty) ?? [];
+        events = await eventService.SearchInApprove(changeEventArgs.Value?.ToString() ?? string.Empty) ?? [];
 
         var jsInterOp = new JsInterop(JSRuntime);
 

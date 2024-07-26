@@ -19,7 +19,7 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
             if (userDTO.Password != userDTO.ConfirmPassword)
                 return new(null, (int)HttpStatusCode.Conflict, "Password and Password Confirmation must be the same");
 
-            var user = new User(new(userDTO.Name), (userDTO.Email), (userDTO.Password));
+            var user = new User(new(userDTO.Name), (userDTO.Email), (userDTO.Password), "user");
 
             if (await userRepository.AlredyExist(userDTO.Email))
                 return new(null, (int)HttpStatusCode.Conflict, "User with the same email already registered");

@@ -1,6 +1,8 @@
-﻿@inject NavigationManager Navigation
+﻿
+@inject NavigationManager Navigation
 @inject IThemeService ThemeService
 @inject IJSRuntime JSRuntime
+@inject AuthenticationService authenticationService
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
@@ -24,21 +26,33 @@
             </NavLink>
         </div>
 
-            <div class="nav-item logout">
-                <button @onclick="LogOut">
-                    @if (ThemeService.IsDarkMode)
-                    {
-                        <img src="/logout-white.svg" width="30" />
-                    }
-
-                    else{
-                        <img src="/logout.svg" width="30" />
-                    }
-                </button>
-
+        @if (isAdmin)
+        {
+            <div class="nav-item @(IsNavLinkActive("/toapprove") ? "active" : null)">
+                <NavLink class="nav-link" href="/toapprove" Match="NavLinkMatch.All" >
+                    <div id="iconApprove">
+                        <MudIcon Icon="@Icons.Material.Filled.CheckCircleOutline" />
+                    </div>
+                </NavLink>
             </div>
+        }
 
-            <div class="nav-item changer">
+        <div class="nav-item logout">
+            <button @onclick="LogOut">
+                @if (ThemeService.IsDarkMode)
+                {
+                    <img src="/logout-white.svg" width="30" />
+                }
+
+                else
+                {
+                    <img src="/logout.svg" width="30" />
+                }
+            </button>
+
+        </div>
+
+        <div class="nav-item changer">
 
             <MudThemeProvider IsDarkMode="@ThemeService.IsDarkMode" Theme="myCostomTheme" />
 
@@ -58,6 +72,7 @@
 
 @code {
     private bool collapseNavMenu = true;
+    private bool isAdmin = false;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -74,10 +89,11 @@
     }
 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         Navigation.LocationChanged += OnLocationChanged;
         ThemeService.OnThemeChanged += OnThemeChanged;
+        isAdmin = await authenticationService.IsAdmin();
     }
 
 
@@ -116,7 +132,5 @@
     private void OnThemeChanged(bool isDarkMode)
     {
         StateHasChanged();
-    }
-
-
+    }    
 }

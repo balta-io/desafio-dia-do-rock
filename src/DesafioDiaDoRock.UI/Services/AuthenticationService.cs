@@ -71,6 +71,24 @@ namespace DesafioDiaDoRock.UI.Services
 
             return new CustomUserClaims(email);
         }
+
+        public async Task<bool> IsAdmin()
+        {
+            JsInterop jsInterop = new JsInterop(jSRuntime);
+
+            var jwtToken = await jsInterop.GetToken();
+
+            if (string.IsNullOrWhiteSpace(jwtToken)) return false;
+
+            jwtToken = jwtToken.Replace("Bearer ", "").Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwtToken);
+
+            var role = token.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+
+            return role == "Admin";
+        }
     }
 }
 

@@ -21,7 +21,8 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new(ClaimTypes.Name, usuario.Email),
-                    new("id", usuario.Id.ToString())
+                    new("id", usuario.Id.ToString()),
+                    new(ClaimTypes.Role, usuario.Roles)
                 }),
                 Expires = DateTime.UtcNow.AddMonths(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

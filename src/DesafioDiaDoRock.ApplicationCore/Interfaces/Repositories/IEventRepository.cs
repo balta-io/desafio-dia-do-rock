@@ -6,6 +6,8 @@ namespace DesafioDiaDoRock.ApplicationCore.Interfaces.Repositories
     {
         Task<Event?> Create(Event @event, CancellationToken cancellationToken);
         Task<List<Event>> Get(string search, CancellationToken cancellationToken = default);
-        Task<List<Event>> Get(CancellationToken cancellationToken = default);
+        Task<List<Event>> GetApprove(CancellationToken cancellationToken = default);
+        Task<List<Event>?> GetAllToApprove(CancellationToken cancellationToken);
+        Task UpdateEvent(Event @event, CancellationToken cancellationToken = default);
     }
 }

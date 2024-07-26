@@ -24,6 +24,7 @@ public class Event
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
     public string UrlImage { get; set; }
+    public bool? Approve { get; set; }
     public string FormatDateResponse()
     {
         if (Date == DateTime.UtcNow.Date)

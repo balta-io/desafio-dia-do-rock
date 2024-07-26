@@ -13,12 +13,14 @@ namespace DesafioDiaDoRock.ApplicationCore.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string Roles { get; set; }
 
-        public User(string name, string email, string password)
+        public User(string name, string email, string password, string roles)
         {
             Name = name;
             Email = email;
             Password = password;
+            Roles = roles;
         }
     }
 

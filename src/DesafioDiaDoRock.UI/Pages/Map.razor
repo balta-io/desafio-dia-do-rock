@@ -8,7 +8,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        List<Event> events = await eventService.Get() ?? [];
+        List<Event> events = await eventService.GetAllApprove() ?? [];
         var jsInterOp = new JsInterop(JSRuntime);
 
         foreach(var @event in events)
