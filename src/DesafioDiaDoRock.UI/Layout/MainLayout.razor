@@ -51,7 +51,7 @@
                 const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
                 const contentString =
-                    '<div class="div-search-resonse">' +
+                    '<div class="div-search-resonse" style="color: black;">' +
                     '<img src="' + urlImage + '" />' +
                     '<div class="resonse-address">' +
                     '<h4>' + band + '</h4>' +
@@ -181,9 +181,6 @@
 
                 map.setOptions({ styles: styles[theme] });
             }
-
-
-
 
             initMap();
         </script>

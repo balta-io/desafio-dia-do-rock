@@ -10,7 +10,15 @@ namespace DesafioDiaDoRock.UI.Services
 
         public async Task<PlacesResult> GetPlaces(string textQuery)
         {
-            return await _client.GetFromJsonAsync<PlacesResult>($"/places?textQuery={textQuery}") ?? new();
+            try
+            {
+                return await _client.GetFromJsonAsync<PlacesResult>($"/places?textQuery={textQuery}") ?? new();
+
+            }
+            catch (Exception)
+            {
+                return new();
+            }
         }
     }
 }

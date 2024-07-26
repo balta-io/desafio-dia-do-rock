@@ -113,6 +113,8 @@ code {
     position: absolute;
     z-index: 2;
     height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .actionbar.light-mode {
@@ -136,6 +138,12 @@ code {
     font-weight: 600;
     color: #848487;
     margin: 0px 0px 8px 11.09px;
+}
+
+.validation-message {
+    font-weight: 600;
+    margin: 0px 0px 8px 11.09px;
+    color: red;
 }
 
 .div-input input {

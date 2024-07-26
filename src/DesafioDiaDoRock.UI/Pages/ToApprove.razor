@@ -3,10 +3,10 @@
 @inject IJSRuntime JSRuntime
 @inject IThemeService ThemeService
 
-<div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" ) mt-lg-5">    
+<div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" ) pt-5">    
     @foreach (var e in events)
     {
-        <div class="div-search-resonse">
+        <div class="div-search-resonse mb-5">
             <img src="@e.UrlImage" />
 
             <div class="resonse-address">

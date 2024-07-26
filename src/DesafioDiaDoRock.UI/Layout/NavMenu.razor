@@ -1,8 +1,8 @@
-﻿
-@inject NavigationManager Navigation
+﻿@inject NavigationManager Navigation
 @inject IThemeService ThemeService
 @inject IJSRuntime JSRuntime
 @inject AuthenticationService authenticationService
+@inject ILoginService loginService
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
@@ -94,6 +94,12 @@
         Navigation.LocationChanged += OnLocationChanged;
         ThemeService.OnThemeChanged += OnThemeChanged;
         isAdmin = await authenticationService.IsAdmin();
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
+    }
+
+    private void OnAuthenticationChanged(bool isDarkMode)
+    {
+        StateHasChanged();
     }
 
 
