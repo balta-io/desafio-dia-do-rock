@@ -5,7 +5,7 @@ using DesafioDiaDoRock.ApplicationCore.Responses;
 
 namespace DesafioDiaDoRock.ApplicationCore.Services
 {
-    public class EventService(IEventRepository eventRepository) : IEventService
+    public class EventService(IEventRepository eventRepository, IEmailService emailService) : IEventService
     {
         public async Task<List<Event>?> SearchInApprove(string search, CancellationToken cancellationToken = default) 
             =>  await eventRepository.Get(search, cancellationToken);
@@ -22,6 +22,11 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
         public async Task<Response<Event?>> UpdateEvent(Event @event, CancellationToken cancellationToken = default)
         {
             await eventRepository.UpdateEvent(@event, cancellationToken);
+
+            if(@event.Approve == true)
+            {
+                await emailService.SendEmailForAlUser(@event);
+            }
             return new();
         }
     }

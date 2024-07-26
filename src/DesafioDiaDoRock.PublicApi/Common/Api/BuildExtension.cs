@@ -12,6 +12,7 @@ namespace DesafioDiaDoRock.PublicApi.Common.Api
             Configuration.BackendUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
             Configuration.FrontendUrl = builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
             Configuration.GoogleApiKey = builder.Configuration.GetValue<string>("GoogleApiKey") ?? string.Empty;
+            //Configuration.ApiKeySendblue = builder.Configuration.GetValue<string>("ApiKeySendblue") ?? string.Empty;
         }
         public static void AddCrossOrigin(this WebApplicationBuilder builder)
         {

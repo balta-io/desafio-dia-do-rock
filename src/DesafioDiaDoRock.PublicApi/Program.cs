@@ -24,6 +24,7 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IPlacesService, PlacesService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddTransient<TokenService>();
 
 builder.AddConfiguration();
