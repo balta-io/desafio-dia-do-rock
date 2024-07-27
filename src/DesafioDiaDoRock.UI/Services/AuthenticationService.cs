@@ -82,6 +82,8 @@ namespace DesafioDiaDoRock.UI.Services
 
             jwtToken = jwtToken.Replace("Bearer ", "").Trim();
 
+            if (string.IsNullOrWhiteSpace(jwtToken)) return false;
+
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwtToken);
 

@@ -97,7 +97,6 @@
         ThemeService.OnThemeChanged += OnThemeChanged;
         loginService.OnAuthenticationChanged += OnAuthenticationChanged;
         isAdmin = await authenticationService.IsAdmin();
-        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
     }
 
     private void OnAuthenticationChanged(bool isDarkMode)
@@ -142,9 +141,4 @@
     {
         StateHasChanged();
     }   
-    
-    public void OnAuthenticationChanged(bool isDarkMode)
-    {
-        StateHasChanged();
-    }
 }

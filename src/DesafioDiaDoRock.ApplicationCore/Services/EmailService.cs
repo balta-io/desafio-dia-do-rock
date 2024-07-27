@@ -68,7 +68,7 @@ namespace DesafioDiaDoRock.ApplicationCore.Services
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
             requestMessage.Headers.Add("accept", "application/json");
-            requestMessage.Headers.Add("api-key", /*Configuration.ApiKeySendblue*/);
+            requestMessage.Headers.Add("api-key", "");
             requestMessage.Content = content;
 
             var response = await _client.SendAsync(requestMessage);
