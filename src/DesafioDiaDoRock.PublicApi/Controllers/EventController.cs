@@ -22,10 +22,9 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
         }
 
         [HttpGet("{search}")]
-        //[Authorize(Policy = "RequireJwt")]
         public async Task<IActionResult> Get(string search, CancellationToken cancellationToken = default)
         {
-            var result = await _eventService.Get(search, cancellationToken);
+            var result = await _eventService.SearchInApprove(search, cancellationToken);
             if (result == null)
             {
                 return NotFound("No events found.");
@@ -34,10 +33,21 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Policy = "RequireJwt")]
         public async Task<IActionResult> Get(CancellationToken cancellationToken = default)
         {
-            var result = await _eventService.Get(cancellationToken);
+            var result = await _eventService.GetAllApprove(cancellationToken);
+            if (result == null)
+            {
+                return NotFound("No events found.");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("/[controller]/toapprove")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ToApprove(CancellationToken cancellationToken = default)
+        {
+            var result = await _eventService.GetAllToApprove(cancellationToken);
             if (result == null)
             {
                 return NotFound("No events found.");
@@ -46,7 +56,7 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
         }
 
         [HttpPost]
-         //[AllowAnonymous] Permitir acesso sem autenticação para criar o evento e obter o token
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] Event @event, CancellationToken cancellationToken = default)
         {
             if (@event == null)
@@ -55,6 +65,25 @@ namespace DesafioDiaDoRock.PublicApi.Controllers
             }
 
             var result = await _eventService.Create(@event, cancellationToken);
+            if (result == null)
+            {
+                return StatusCode(500, "An error occurred while creating the event.");
+            }
+
+            return Ok(new { Event = result });
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> UpdateEvent([FromBody] Event @event, CancellationToken cancellationToken = default)
+        {
+            if (@event == null)
+            {
+                return BadRequest("Event data is required.");
+            }
+
+            var result = await _eventService.UpdateEvent(@event, cancellationToken);
+
             if (result == null)
             {
                 return StatusCode(500, "An error occurred while creating the event.");

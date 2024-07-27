@@ -45,7 +45,7 @@
         var response = await userService.Create(userDTO);
 
         if (response.IsSuccess)
-            Navigation.NavigateTo("/");
+            Navigation.NavigateTo("/login");
         
         else
             errorMessage = response.Message;

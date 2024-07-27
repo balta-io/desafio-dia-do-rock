@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/login"
 @using DesafioDiaDoRock.ApplicationCore.DTO.UserDTO
 @using System.Text.Json
 @using DesafioDiaDoRock.UI.Services
@@ -6,9 +6,8 @@
 @inject IUserService userService;
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
-
-
-
+@inject ILoginService loginService
+@inject AuthenticationService authenticationService
 <PageTitle>Login</PageTitle>
 
 
@@ -24,7 +23,8 @@
 
         <input class="input-form" type="email" placeholder="Enter your email" @bind="email" required>
         <input class="input-form" type="password" placeholder="Enter your password" @bind="password" required>
-        <Button Text="Login" ></Button>
+        <button type="submit" class="button-primary" >Login</button>
+        <button type="button" class="button-primary" @onclick="HandleLoginAdmin">Login Admin</button>
 
         <p class="error-message-response">@errorMessage</p>
 
@@ -56,17 +56,45 @@
             var jsonString = response.Data.ToString();
             var loginResponse = JsonSerializer.Deserialize<LoginResponse>(jsonString);
 
-            var customAuthStateProvider = (AuthenticationService)AuthStateProvider;
+            authenticationService.UpdateAuthenticationState(loginResponse.token);
+            if (!loginService.IsNecessaryAuthenticated)
+                Navigation.NavigateTo("/", forceLoad: true);
 
-            customAuthStateProvider.UpdateAuthenticationState(loginResponse.token);
+            loginService.ToggleAuthentication();
+            StateHasChanged();
+
+
+
+
+        }
+        else
+            errorMessage = response.Message;
+    }
+
+    private async Task HandleLoginAdmin()
+    {
+        var loginDTO = new LoginDTO
+            {
+                Email = "admin@example.com",
+                Password = "1234567890"
+            };
+
+        var response = await userService.Login(loginDTO);
+
+        if (response.IsSuccess)
+        {
+            var jsonString = response.Data.ToString();
+            var loginResponse = JsonSerializer.Deserialize<LoginResponse>(jsonString);
+
+            authenticationService.UpdateAuthenticationState(loginResponse.token);
 
             // var jsInterop = new JsInterop(JSRuntime);
             // await jsInterop.SetToken(loginResponse.token);
 
-            Navigation.NavigateTo("/home");
+            loginService.ToggleAuthentication();
+            StateHasChanged();
+            Navigation.NavigateTo("/", forceLoad: true);
         }
-           
-
         else
             errorMessage = response.Message;
     }
@@ -77,6 +105,15 @@
         public string token { get; set; } = string.Empty;
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
+    }
+
+    private void OnAuthenticationChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
 }
 
 

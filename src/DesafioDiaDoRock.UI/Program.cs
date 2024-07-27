@@ -18,9 +18,10 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IPlacesService, PlacesService>();
 builder.Services.AddScoped<IThemeService, ThemeService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationService>();
+builder.Services.AddTransient<AuthenticationService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<IAuthorizationPolicyProvider, DefaultAuthorizationPolicyProvider>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 
 
 builder.Services.AddMudServices();
@@ -29,7 +30,7 @@ builder.Services.AddMudServices();
 
 Configuration.BackendUrl = builder.HostEnvironment.IsDevelopment() ? Configuration.BackendUrl : "https://api-desafiodiadorock-geh0e9e3gkfpbzgg.eastus-01.azurewebsites.net";
 
-builder.Services.AddHttpClient(WebConfiguration.HttpClientName, client => client.BaseAddress = new Uri(Configuration.BackendUrl));
+builder.Services.AddHttpClient(WebConfiguration.HttpClientName, client => client.BaseAddress = new Uri(Configuration.BackendUrl)).AddHttpMessageHandler<AuthenticationService>();
 
 
 

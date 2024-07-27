@@ -14,7 +14,6 @@ public class Event
         Latitude = latitude;
         Longitude = longitude;
         UrlImage = urlImage;
-        roles = [];
     }
 
     public int Id { get; set; }
@@ -25,6 +24,7 @@ public class Event
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
     public string UrlImage { get; set; }
+    public bool? Approve { get; set; }
     public string FormatDateResponse()
     {
         if (Date == DateTime.UtcNow.Date)
@@ -40,6 +40,4 @@ public class Event
             return Date.ToShortDateString();
         }
     }
-
-    public string[] roles { get; set; }
 }

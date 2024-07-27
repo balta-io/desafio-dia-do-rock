@@ -2,6 +2,7 @@
 @inject IThemeService ThemeService;
 @inject IJSRuntime JSRuntime;
 @inject NavigationManager Navigation
+@inject ILoginService loginService
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -9,7 +10,9 @@
 <MudSnackbarProvider />
 
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" ) 
+        @(loginService.IsNecessaryAuthenticated ? "d-none" : "")">
+
         <NavMenu />
     </div>
 
@@ -48,7 +51,7 @@
                 const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
                 const contentString =
-                    '<div class="div-search-resonse">' +
+                    '<div class="div-search-resonse" style="color: black;">' +
                     '<img src="' + urlImage + '" />' +
                     '<div class="resonse-address">' +
                     '<h4>' + band + '</h4>' +
@@ -179,31 +182,28 @@
                 map.setOptions({ styles: styles[theme] });
             }
 
-
-
-
             initMap();
         </script>
-
     </main>
 </div>
 
 @code {
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         ThemeService.OnThemeChanged += OnThemeChanged;
-        var token = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "token");
-        if (string.IsNullOrEmpty(token))
-        {
-            Navigation.NavigateTo("/", true);
-        }
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
     }
 
     private void OnThemeChanged(bool isDarkMode)
     {
         var theme = isDarkMode ? "dark" : "light";
         JSRuntime.InvokeVoidAsync("setMapStyle", theme);
+        StateHasChanged();
+    }
+
+    private void OnAuthenticationChanged(bool isDarkMode)
+    {
         StateHasChanged();
     }
 }

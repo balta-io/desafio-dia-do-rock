@@ -108,20 +108,21 @@ code {
 }
 
 
-.theme-container.light-mode .actionbar {
+.actionbar {
     width: 375px;
     position: absolute;
     z-index: 2;
     height: 100vh;
-    background-color: #E7E8E1;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.theme-container.dark-mode .actionbar {
-    width: 375px;
-    position: absolute;
-    z-index: 2;
-    height: 100vh;
-    background-color: #1a1a1a;
+.actionbar.light-mode {
+    background-color: #EAEBE4;
+}
+
+.actionbar.dark-mode {
+    background-color: #15141B;
 }
 
 .div-input {
@@ -133,15 +134,19 @@ code {
     display: none;
 }
 
-
 .div-input label {
     font-weight: 600;
     color: #848487;
     margin: 0px 0px 8px 11.09px;
 }
 
-.theme-container.dark-mode .div-input input {
-    background-color: rgba(0, 0, 0, 0.2);
+.validation-message {
+    font-weight: 600;
+    margin: 0px 0px 8px 11.09px;
+    color: red;
+}
+
+.div-input input {
     width: 100%;
     height: 56px;
     border-radius: 8px;
@@ -150,23 +155,18 @@ code {
     border: none;
     outline: none;
     padding-left: 50px;
+}
+
+.dark-mode .div-input input {
+    background-color: #18171E;
     color: #fff;
 }
 
-.theme-container.light-mode .div-input input {
-    background-color: #c4c4bf;
-    width: 100%;
-    height: 56px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    border: none;
-    outline: none;
-    padding-left: 50px;
-}
-
-.theme-container.light-mode #location {
+.light-mode .div-input input {
     background-color: #E7E8E1;
+}
+
+#location {
     width: 100%;
     height: 56px;
     border-radius: 8px;
@@ -177,18 +177,13 @@ code {
     padding: 0px 0px 0px 50px;
 }
 
-.theme-container.dark-mode #location {
-    background-color: rgba(0, 0, 0, 0.2);
-    width: 100%;
-    height: 56px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-    border: none;
-    outline: none;
-    padding: 0px 0px 0px 50px;
+.light-mode #location {
+    background-color: #E7E8E1;
 }
 
+.dark-mode #location {
+    background-color: #18171E;
+}
 
 .mud-input-control-input-container .mud-input.mud-input-underline:after {
     border-bottom: none;

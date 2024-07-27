@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace DesafioDiaDoRock.UI.Services
 {
-    public class AuthenticationService : AuthenticationStateProvider
+    public class AuthenticationService : DelegatingHandler
     {
         private readonly IJSRuntime jSRuntime;
         private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
@@ -19,28 +19,15 @@ namespace DesafioDiaDoRock.UI.Services
             this.jSRuntime = jSRuntime;
         }
 
-        public async override Task<AuthenticationState> GetAuthenticationStateAsync()
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            try
-            {
-                JsInterop jsInterop = new JsInterop(jSRuntime);
+            JsInterop jsInterop = new JsInterop(jSRuntime);
 
-                var token = await jsInterop.GetToken();
+            var token = await jsInterop.GetToken();
+            if (token != null)
+                request.Headers.Add("Authorization", token);
 
-                if (string.IsNullOrEmpty(token))
-                    return await Task.FromResult(new AuthenticationState(anonymous));
-
-                var getUserClaims = DecryptToken(token);
-                if (getUserClaims == null) return await Task.FromResult(new AuthenticationState(anonymous));
-
-                var claimsPrincipal = SetClaimPrincipal(getUserClaims);
-                return await Task.FromResult(new AuthenticationState(claimsPrincipal));
-            }
-
-            catch
-            {
-                return await Task.FromResult(new AuthenticationState(anonymous));
-            }
+            return await base.SendAsync(request, cancellationToken);
         }
 
 
@@ -61,7 +48,6 @@ namespace DesafioDiaDoRock.UI.Services
                 JsInterop jsInterop = new JsInterop(jSRuntime);
                 await jsInterop.SetToken("");
             }
-            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
 
         public static ClaimsPrincipal SetClaimPrincipal(CustomUserClaims claims)
@@ -76,7 +62,7 @@ namespace DesafioDiaDoRock.UI.Services
 
         private static CustomUserClaims DecryptToken(string jwtToken)
         {
-            if(string.IsNullOrEmpty(jwtToken)) return new CustomUserClaims();
+            if (string.IsNullOrEmpty(jwtToken)) return new CustomUserClaims();
 
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwtToken);
@@ -86,7 +72,25 @@ namespace DesafioDiaDoRock.UI.Services
             return new CustomUserClaims(email);
         }
 
-        
+        public async Task<bool> IsAdmin()
+        {
+            JsInterop jsInterop = new JsInterop(jSRuntime);
+
+            var jwtToken = await jsInterop.GetToken();
+
+            if (string.IsNullOrWhiteSpace(jwtToken)) return false;
+
+            jwtToken = jwtToken.Replace("Bearer ", "").Trim();
+
+            if (string.IsNullOrWhiteSpace(jwtToken)) return false;
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(jwtToken);
+
+            var role = token.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+
+            return role == "Admin";
+        }
     }
 }
 

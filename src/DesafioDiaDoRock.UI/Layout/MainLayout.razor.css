@@ -16,6 +16,14 @@ main {
     top: 0;
 }
 
+.sidebar.dark-mode {
+    background-color: #131219;
+}
+
+.sidebar.light-mode {
+    background-color: #ECEDE6;
+}
+
 .top-row {
     background-color: #ECEDE6;
     border-bottom: 1px solid #ECEDE6;
