@@ -1,0 +1,144 @@
+﻿@inject NavigationManager Navigation
+@inject IThemeService ThemeService
+@inject IJSRuntime JSRuntime
+@inject AuthenticationService authenticationService
+@inject ILoginService loginService
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="div-profile" style="">
+            <img src="/1711899863214.jpg" class="img-profile" />
+            <img src="/Presence Badge.svg" class="icon-profile" />
+        </div>
+        <div class="nav-item @(IsNavLinkActive("/search") ? "active" : null)">
+            <NavLink class="nav-link" href="/search" Match="NavLinkMatch.All">
+                <img src="/Icon-Search.svg" class="icon-navitem" />
+            </NavLink>
+        </div>
+        <div class="nav-item @(IsNavLinkActive("/") ? "active" : null)">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <img src="/Icon-Map.svg" class="icon-navitem" />
+            </NavLink>
+        </div>
+        <div class="nav-item @(IsNavLinkActive("/add") ? "active" : null)">
+            <NavLink class="nav-link" href="/add" Match="NavLinkMatch.All">
+                <img src="/Icon-Plus.svg" class="icon-navitem" />
+            </NavLink>
+        </div>
+
+        @if (isAdmin)
+        {
+            <div class="nav-item @(IsNavLinkActive("/toapprove") ? "active" : null)">
+                <NavLink class="nav-link" href="/toapprove" Match="NavLinkMatch.All" >
+                    <div id="iconApprove">
+                        <MudIcon Icon="@Icons.Material.Filled.CheckCircleOutline" />
+                    </div>
+                </NavLink>
+            </div>
+        }
+
+        <div class="nav-item logout">
+            <button @onclick="LogOut">
+                @if (ThemeService.IsDarkMode)
+                {
+                    <img src="/logout-white.svg" width="30" />
+                }
+
+                else
+                {
+                    <img src="/logout.svg" width="30" />
+                }
+            </button>
+
+        </div>
+
+        <div class="nav-item changer">
+
+            <MudThemeProvider IsDarkMode="@ThemeService.IsDarkMode" Theme="myCostomTheme" />
+
+            <button @onclick="ThemeService.ToggleTheme" class="theme-toggle-btn">
+                @if (ThemeService.IsDarkMode)
+                {
+                    <img src="/pngtree-vector-sun-icon-png-image_883996-removebg-preview.png" alt="Light Mode" width="40" />
+                }
+                else
+                {
+                    <img src="/icon-moon-removebg-preview.png" alt="Dark Mode" width="40" />
+                }
+            </button>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    private bool isAdmin = false;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async void LogOut()
+    {
+        JsInterop jsInterop = new JsInterop(JSRuntime);
+        await jsInterop.SetToken("");
+        Navigation.NavigateTo("/login");
+        loginService.ToggleAuthentication();
+        
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+        ThemeService.OnThemeChanged += OnThemeChanged;
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
+        isAdmin = await authenticationService.IsAdmin();
+    }
+
+    private void OnAuthenticationChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
+
+
+    private MudTheme myCostomTheme = new MudTheme()
+        {
+            PaletteLight = new PaletteLight()
+            {
+                Primary = Colors.DeepPurple.Darken2,
+                Secondary = Colors.Green.Accent4,
+                AppbarBackground = Colors.BlueGray.Darken3,
+            },
+
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Darken4,
+                Secondary = Colors.Green.Accent4,
+                AppbarBackground = Colors.Gray.Darken3,
+            },
+        };
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    private bool IsNavLinkActive(string href)
+    {
+        if (href == "/")
+        {
+            return Navigation.Uri.TrimEnd('/') == Navigation.BaseUri.TrimEnd('/');
+        }
+
+        return Navigation.Uri.Contains(href, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private void OnThemeChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }   
+}

@@ -1,0 +1,69 @@
+﻿@page "/search"
+@inject IEventService eventService
+@inject IJSRuntime JSRuntime
+@inject IThemeService ThemeService
+
+<PageTitle>Pesquisa</PageTitle>
+
+<div class="actionbar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" )">
+    <div class="div-input">
+        <label for="search">Buscar um evento</label>
+        <div>
+            <input type="text" id="search" @onchange="(e) => SearchEvent(e)" autocomplete="off" />
+            @if (ThemeService.IsDarkMode == true)
+            {
+                <img src="/Icon-Search-White.svg" class="img-input" />
+            }
+            else
+            {
+                <img src="/Icon-Search-Black.svg" class="img-input" />
+            }
+        </div>
+    </div>
+
+    @foreach (var e in events)
+    {
+        <div class="div-search-resonse mb-5">
+            <img src="@e.UrlImage" />
+
+            <div class="resonse-address">
+                <h5>@e.NameLocation</h5>
+                <p>@e.Address</p>
+            </div>
+
+            <div class="resonse-hour">
+                @e.FormatDateResponse()
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    List<Event> events = [];
+
+    async Task SearchEvent(ChangeEventArgs changeEventArgs)
+    {
+        events = await eventService.SearchInApprove(changeEventArgs.Value?.ToString() ?? string.Empty) ?? [];
+
+        var jsInterOp = new JsInterop(JSRuntime);
+
+        await jsInterOp.RemoveMarkers();
+
+        foreach (var @event in events)
+        {
+            await jsInterOp.CreatMarker(new(@event.Latitude, @event.Longitude), @event);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        ThemeService.OnThemeChanged += OnThemeChanged;
+    }
+
+    private void OnThemeChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
+}
+

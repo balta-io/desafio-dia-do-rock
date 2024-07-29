@@ -1,0 +1,209 @@
+﻿@inherits LayoutComponentBase
+@inject IThemeService ThemeService;
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager Navigation
+@inject ILoginService loginService
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div class="page">
+    <div class="sidebar @( ThemeService.IsDarkMode ? "dark-mode" : "light-mode" ) 
+        @(loginService.IsNecessaryAuthenticated ? "d-none" : "")">
+
+        <NavMenu />
+    </div>
+
+    <main>
+
+        @Body
+
+
+        <div id="map"></div>
+        <script>
+            (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+                ({ key: "AIzaSyAqN-qevL5e5RtlGTbcUwEVkh7vi6MPcuM", v: "weekly" });
+        </script>
+        <script>
+            // Initialize and add the map
+            let map;
+            let markers = [];
+
+            async function initMap() {
+                const position = { lat: -8.407711439884904, lng: -54.368339235802274 };
+
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+                map = new Map(document.getElementById("map"), {
+                    zoom: 4,
+                    center: position,
+                });
+
+                setMapStyle("light");
+            }
+
+            async function creatMarker(position, urlImage, nameLocation, address, date, band) {
+
+                const { Map } = await google.maps.importLibrary("maps");
+                const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+                const contentString =
+                    '<div class="div-search-resonse" style="color: black;">' +
+                    '<img src="' + urlImage + '" />' +
+                    '<div class="resonse-address">' +
+                    '<h4>' + band + '</h4>' +
+                    "<h5>" + nameLocation + "</h5>" +
+                    "<p>" + address + "</p>" +
+                    "</div>" +
+                    '<div class="resonse-hour">' +
+                    date +
+                    "</div>" +
+                    "</div>";
+
+
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    ariaLabel: band,
+                });
+
+                const marker = new google.maps.Marker({
+                    position: position,
+                    map,
+                    title: band,
+                });
+
+                markers.push(marker);
+
+                marker.addListener("click", () => {
+                    infowindow.open({
+                        anchor: marker,
+                        map,
+                    });
+                });
+
+            }
+
+            function removeMarkers() {
+                for (let marker of markers) {
+                    marker.setMap(null);
+                }
+                markers = [];
+            }
+
+            function setMapStyle(theme) {
+                const styles = {
+                    dark: [
+                        { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+                        { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+                        { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                        {
+                            featureType: "administrative.locality",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#d59563" }],
+                        },
+                        {
+                            featureType: "poi",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#d59563" }],
+                        },
+                        {
+                            featureType: "poi.park",
+                            elementType: "geometry",
+                            stylers: [{ color: "#263c3f" }],
+                        },
+                        {
+                            featureType: "poi.park",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#6b9a76" }],
+                        },
+                        {
+                            featureType: "road",
+                            elementType: "geometry",
+                            stylers: [{ color: "#38414e" }],
+                        },
+                        {
+                            featureType: "road",
+                            elementType: "geometry.stroke",
+                            stylers: [{ color: "#212a37" }],
+                        },
+                        {
+                            featureType: "road",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#9ca5b3" }],
+                        },
+                        {
+                            featureType: "road.highway",
+                            elementType: "geometry",
+                            stylers: [{ color: "#746855" }],
+                        },
+                        {
+                            featureType: "road.highway",
+                            elementType: "geometry.stroke",
+                            stylers: [{ color: "#1f2835" }],
+                        },
+                        {
+                            featureType: "road.highway",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#f3d19c" }],
+                        },
+                        {
+                            featureType: "transit",
+                            elementType: "geometry",
+                            stylers: [{ color: "#2f3948" }],
+                        },
+                        {
+                            featureType: "transit.station",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#d59563" }],
+                        },
+                        {
+                            featureType: "water",
+                            elementType: "geometry",
+                            stylers: [{ color: "#17263c" }],
+                        },
+                        {
+                            featureType: "water",
+                            elementType: "labels.text.fill",
+                            stylers: [{ color: "#515c6d" }],
+                        },
+                        {
+                            featureType: "water",
+                            elementType: "labels.text.stroke",
+                            stylers: [{ color: "#17263c" }],
+                        },
+                    ],
+                    light: null // Use default style for light mode
+                };
+
+                map.setOptions({ styles: styles[theme] });
+            }
+
+            initMap();
+        </script>
+    </main>
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        ThemeService.OnThemeChanged += OnThemeChanged;
+        loginService.OnAuthenticationChanged += OnAuthenticationChanged;
+    }
+
+    private void OnThemeChanged(bool isDarkMode)
+    {
+        var theme = isDarkMode ? "dark" : "light";
+        JSRuntime.InvokeVoidAsync("setMapStyle", theme);
+        StateHasChanged();
+    }
+
+    private void OnAuthenticationChanged(bool isDarkMode)
+    {
+        StateHasChanged();
+    }
+}
